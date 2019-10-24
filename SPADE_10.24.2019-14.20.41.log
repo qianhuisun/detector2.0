@@ -4055,3 +4055,758 @@ Oct 24, 2019 2:23:16 PM spade.utility.Execute$Output log INFO: Command "rmmod ne
 Oct 24, 2019 2:23:16 PM spade.reporter.Audit shutdown INFO: Successfully removed the kernel controller module
 Oct 24, 2019 2:23:17 PM spade.reporter.Audit shutdown INFO: Going to wait for event reader thread to finish
 Oct 24, 2019 2:23:17 PM spade.reporter.Audit$1 run INFO: spadeAuditBridge output: Flushing buffer before stopping
+Oct 24, 2019 2:24:16 PM spade.utility.ExternalMemoryMap printStats INFO: ProcessManager[ProcessUnitStatesMap]: Total map accesses = 2,805, Interval map accesses = 2,805, Total Bloom filter false positives = 0, Interval Bloom filter false positives = 0, Total LRU cache hits = 2,757, Interval LRU cache hits = 2,757, Total LRU cache misses = 0, Interval LRU cache misses = 0, Total successful database hits = 0, Interval successful database hits = 0, Total failed database hits = 0, Interval failed database hits = 0, Total database insertions = 0, Interval database insertions = 0, Current in-memory element count = 36
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5796, operation=mprotect, protection=1, source=syscall, srcID=-49545382, time=1571944996.412, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.reporter.audit.AuditEventReader printStats INFO: Overall rate: 13.207 records/sec in 149.694 seconds. Interval rate: 13.207 records/sec in 149.694 seconds.
+Oct 24, 2019 2:24:16 PM spade.reporter.Audit printStats INFO: Internal buffer size: 0, JVM memory in use: 47MB
+Oct 24, 2019 2:24:16 PM spade.utility.ExternalMemoryMap printStats INFO: Audit[ArtifactsMap]: Total map accesses = 1,497, Interval map accesses = 1,497, Total Bloom filter false positives = 0, Interval Bloom filter false positives = 0, Total LRU cache hits = 723, Interval LRU cache hits = 723, Total LRU cache misses = 0, Interval LRU cache misses = 0, Total successful database hits = 0, Interval successful database hits = 0, Total failed database hits = 0, Interval failed database hits = 0, Total database insertions = 0, Interval database insertions = 0, Current in-memory element count = 774
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=28581882, memory address=7f87b03fd000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5797, operation=mprotect, protection=1, source=syscall, srcID=28581882, time=1571944996.412, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-148544838, memory address=7f87b0661000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5798, operation=mprotect, protection=1, source=syscall, srcID=-148544838, time=1571944996.412, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=1146989238, event id=5799, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.412, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5800, operation=mmap (write), protection=3, source=syscall, srcID=1462287505, time=1571944996.412, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1929532153, epoch=0, path=/etc/passwd, permissions=0644, source=syscall, subtype=file, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1929532153, event id=5801, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.412, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5802, operation=mmap (write), protection=3, source=syscall, srcID=1462287505, time=1571944996.419, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1929532153, event id=5803, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.419, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5804, operation=mmap (write), protection=3, source=syscall, srcID=1462287505, time=1571944996.419, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-993827506, event id=5805, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.419, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5806, operation=mmap (write), protection=3, source=syscall, srcID=1462287505, time=1571944996.419, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.reporter.Audit log INFO: [Time:EventID=1571944996.419:5807] Tried to update agent
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{command line=sudo bin/spade stop, cwd=/home/aaron/already_build/linux-collector, egid=0, euid=1, gid=1000, name=sudo, pid=2672, ppid=1879, source=syscall, start time=1571944996.285, type=Process, uid=0, unit=0}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex SEVERE: missing id for vertex : 
+{command line=sudo bin/spade stop, cwd=/home/aaron/already_build/linux-collector, egid=0, euid=1, gid=1000, name=sudo, pid=2672, ppid=1879, source=syscall, start time=1571944996.285, type=Process, uid=0, unit=0}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5807, operation=update, source=syscall, srcID=-2101277694, time=1571944996.419, type=WasTriggeredBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-759817490, epoch=0, path=/etc/sudoers, permissions=0440, source=syscall, subtype=file, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-759817490, event id=5807, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.419, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5808, operation=mmap (write), protection=3, source=syscall, srcID=1462287505, time=1571944996.419, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.reporter.Audit log INFO: [Time:EventID=1571944996.419:5810] Tried to update agent
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{command line=sudo bin/spade stop, cwd=/home/aaron/already_build/linux-collector, egid=0, euid=0, gid=1000, name=sudo, pid=2672, ppid=1879, source=syscall, start time=1571944996.285, type=Process, uid=0, unit=0}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex SEVERE: missing id for vertex : 
+{command line=sudo bin/spade stop, cwd=/home/aaron/already_build/linux-collector, egid=0, euid=0, gid=1000, name=sudo, pid=2672, ppid=1879, source=syscall, start time=1571944996.285, type=Process, uid=0, unit=0}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5810, operation=update, source=syscall, srcID=-2101277694, time=1571944996.419, type=WasTriggeredBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-40195804, epoch=0, path=/etc/sudoers.d, permissions=0750, source=syscall, subtype=directory, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-40195804, event id=5810, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.419, type=Used}
+Oct 24, 2019 2:24:16 PM spade.reporter.Audit log INFO: [Time:EventID=1571944996.419:5811] Tried to update agent
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{command line=sudo bin/spade stop, cwd=/home/aaron/already_build/linux-collector, egid=0, euid=0, gid=1000, name=sudo, pid=2672, ppid=1879, source=syscall, start time=1571944996.285, type=Process, uid=1000, unit=0}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex SEVERE: missing id for vertex : 
+{command line=sudo bin/spade stop, cwd=/home/aaron/already_build/linux-collector, egid=0, euid=0, gid=1000, name=sudo, pid=2672, ppid=1879, source=syscall, start time=1571944996.285, type=Process, uid=1000, unit=0}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5811, operation=update, source=syscall, srcID=-2101277694, time=1571944996.419, type=WasTriggeredBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=738541696, epoch=0, path=/proc/sys/kernel/ngroups_max, permissions=0444, source=syscall, subtype=file, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=738541696, event id=5811, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.419, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=738541696, event id=5812, operation=read, size=6, source=syscall, srcID=-2101277694, time=1571944996.419, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=510200458, memory address=7f87b83e3000, size=81000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5813, operation=mmap (write), protection=3, source=syscall, srcID=510200458, time=1571944996.419, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1718571260, memory address=7f87b8362000, size=81000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5814, operation=mmap (write), protection=3, source=syscall, srcID=1718571260, time=1571944996.419, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=899779348, epoch=0, path=/etc/group, permissions=0644, source=syscall, subtype=file, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=899779348, event id=5815, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1433658354, memory address=7f87b847d000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5816, operation=mmap (write), protection=3, source=syscall, srcID=1433658354, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1414339269, event id=5817, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1368649201, memory address=7f87b834d000, size=1433c, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5818, operation=mmap (write), protection=1, source=syscall, srcID=1368649201, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1414339269, event id=5818, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1414339269, event id=5818, operation=mmap, pid=2672, source=syscall, srcID=1368649201, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.reporter.Audit$1 run INFO: Exiting error reader thread for process: spadeAuditBridge
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=91378229, epoch=0, path=/lib64/libnss_sss.so.2, permissions=0755, source=syscall, subtype=file, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=91378229, event id=5819, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1769393328, memory address=7f87ac5f2000, size=208490, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5820, operation=mmap (write), protection=5, source=syscall, srcID=1769393328, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=91378229, event id=5820, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=91378229, event id=5820, operation=mmap, pid=2672, source=syscall, srcID=1769393328, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1157396625, memory address=7f87ac5fa000, size=1ff000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5821, operation=mprotect, protection=0, source=syscall, srcID=-1157396625, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-315518668, memory address=7f87ac7f9000, size=2000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5822, operation=mmap (write), protection=3, source=syscall, srcID=-315518668, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=91378229, event id=5822, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=91378229, event id=5822, operation=mmap, pid=2672, source=syscall, srcID=-315518668, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-315548459, memory address=7f87ac7f9000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5823, operation=mprotect, protection=1, source=syscall, srcID=-315548459, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=391755487, epoch=0, path=/var/lib/sss/mc/initgroups, permissions=0664, source=syscall, subtype=file, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=391755487, event id=5824, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1797711248, memory address=7f87abc05000, size=9ec9a8, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5825, operation=mmap (write), protection=1, source=syscall, srcID=1797711248, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=391755487, event id=5825, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=391755487, event id=5825, operation=mmap, pid=2672, source=syscall, srcID=1797711248, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=899779348, event id=5830, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5831, operation=mmap (write), protection=3, source=syscall, srcID=1433658354, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=899779348, event id=5832, operation=read, size=1125, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.reporter.Audit log INFO: [Time:EventID=1571944996.421:5833] Tried to update agent
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5833, operation=update, source=syscall, srcID=-2101277694, time=1571944996.421, type=WasTriggeredBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1989610547, epoch=0, path=/etc/pam.d/sudo, permissions=0644, source=syscall, subtype=file, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=1989610547, event id=5833, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5834, operation=mmap (write), protection=3, source=syscall, srcID=1433658354, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=289847070, epoch=0, path=/etc/pam.d/system-auth, permissions=0644, source=syscall, subtype=file, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=289847070, event id=5835, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1405029203, memory address=7f87b847c000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5836, operation=mmap (write), protection=3, source=syscall, srcID=1405029203, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=289847070, event id=5837, operation=read, size=1072, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1785972808, epoch=0, path=/usr/lib64/security/pam_env.so, permissions=0755, source=syscall, subtype=file, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1785972808, event id=5838, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1785972808, event id=5839, operation=read, size=832, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-2053215197, memory address=7f87aba01000, size=2030e0, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5840, operation=mmap (write), protection=5, source=syscall, srcID=-2053215197, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1785972808, event id=5840, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1785972808, event id=5840, operation=mmap, pid=2672, source=syscall, srcID=-2053215197, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1944569063, memory address=7f87aba04000, size=1ff000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5841, operation=mprotect, protection=0, source=syscall, srcID=-1944569063, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=13845783, memory address=7f87abc03000, size=2000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5842, operation=mmap (write), protection=3, source=syscall, srcID=13845783, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1785972808, event id=5842, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1785972808, event id=5842, operation=mmap, pid=2672, source=syscall, srcID=13845783, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=13815992, memory address=7f87abc03000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5843, operation=mprotect, protection=1, source=syscall, srcID=13815992, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-529060992, epoch=0, path=/usr/lib64/security/pam_faildelay.so, permissions=0755, source=syscall, subtype=file, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-529060992, event id=5844, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-67560749, memory address=7f87ab7fe000, size=2020b0, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5845, operation=mmap (write), protection=5, source=syscall, srcID=-67560749, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-529060992, event id=5845, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-529060992, event id=5845, operation=mmap, pid=2672, source=syscall, srcID=-67560749, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-499865370, memory address=7f87ab800000, size=1ff000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5846, operation=mprotect, protection=0, source=syscall, srcID=-499865370, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1970900964, memory address=7f87ab9ff000, size=2000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5847, operation=mmap (write), protection=3, source=syscall, srcID=1970900964, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-529060992, event id=5847, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-529060992, event id=5847, operation=mmap, pid=2672, source=syscall, srcID=1970900964, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1970871173, memory address=7f87ab9ff000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5848, operation=mprotect, protection=1, source=syscall, srcID=1970871173, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1521585816, epoch=0, path=/usr/lib64/security/pam_fprintd.so, permissions=0755, source=syscall, subtype=file, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1521585816, event id=5849, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-546434243, memory address=7f87ab5f8000, size=205408, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5850, operation=mmap (write), protection=5, source=syscall, srcID=-546434243, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1521585816, event id=5850, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1521585816, event id=5850, operation=mmap, pid=2672, source=syscall, srcID=-546434243, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=735945291, memory address=7f87ab5fd000, size=1ff000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5851, operation=mprotect, protection=0, source=syscall, srcID=735945291, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1600607159, memory address=7f87ab7fc000, size=2000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5852, operation=mmap (write), protection=3, source=syscall, srcID=-1600607159, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1521585816, event id=5852, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1521585816, event id=5852, operation=mmap, pid=2672, source=syscall, srcID=-1600607159, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1414339269, event id=5853, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1126249458, memory address=7f87b844f000, size=1433c, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5854, operation=mmap (write), protection=1, source=syscall, srcID=-1126249458, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1414339269, event id=5854, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1414339269, event id=5854, operation=mmap, pid=2672, source=syscall, srcID=-1126249458, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=69693252, epoch=0, path=/lib64/libdbus-glib-1.so.2, permissions=0755, source=syscall, subtype=file, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=69693252, event id=5855, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1739173823, memory address=7f87ab3d0000, size=227dd8, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5856, operation=mmap (write), protection=5, source=syscall, srcID=-1739173823, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=69693252, event id=5856, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=69693252, event id=5856, operation=mmap, pid=2672, source=syscall, srcID=-1739173823, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=205501274, memory address=7f87ab3f6000, size=200000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5857, operation=mprotect, protection=0, source=syscall, srcID=205501274, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-2079572328, memory address=7f87ab5f6000, size=2000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5858, operation=mmap (write), protection=3, source=syscall, srcID=-2079572328, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=69693252, event id=5858, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=69693252, event id=5858, operation=mmap, pid=2672, source=syscall, srcID=-2079572328, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-992368956, epoch=0, path=/lib64/libdbus-1.so.3, permissions=0755, source=syscall, subtype=file, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-992368956, event id=5859, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1322086250, memory address=7f87ab180000, size=24f0d8, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5860, operation=mmap (write), protection=5, source=syscall, srcID=-1322086250, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-992368956, event id=5860, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-992368956, event id=5860, operation=mmap, pid=2672, source=syscall, srcID=-1322086250, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-279243349, memory address=7f87ab1ce000, size=1ff000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5861, operation=mprotect, protection=0, source=syscall, srcID=-279243349, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1679171497, memory address=7f87ab3cd000, size=2000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5862, operation=mmap (write), protection=3, source=syscall, srcID=1679171497, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-992368956, event id=5862, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-992368956, event id=5862, operation=mmap, pid=2672, source=syscall, srcID=1679171497, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1734895741, memory address=7f87ab3cf000, size=d8, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5863, operation=mmap (write), protection=3, source=syscall, srcID=1734895741, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=158604328, epoch=0, path=/lib64/libgobject-2.0.so.0, permissions=0755, source=syscall, subtype=file, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=158604328, event id=5864, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1119679967, memory address=7f87aaf2f000, size=250f48, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5865, operation=mmap (write), protection=5, source=syscall, srcID=-1119679967, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=158604328, event id=5865, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=158604328, event id=5865, operation=mmap, pid=2672, source=syscall, srcID=-1119679967, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1010427640, memory address=7f87aaf7e000, size=200000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5866, operation=mprotect, protection=0, source=syscall, srcID=-1010427640, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=2121690974, memory address=7f87ab17e000, size=2000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5867, operation=mmap (write), protection=3, source=syscall, srcID=2121690974, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=158604328, event id=5867, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=158604328, event id=5867, operation=mmap, pid=2672, source=syscall, srcID=2121690974, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-872153412, epoch=0, path=/lib64/libglib-2.0.so.0, permissions=0755, source=syscall, subtype=file, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-872153412, event id=5868, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=91049417, memory address=7f87aac19000, size=3158c8, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5869, operation=mmap (write), protection=5, source=syscall, srcID=91049417, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-872153412, event id=5869, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-872153412, event id=5869, operation=mmap, pid=2672, source=syscall, srcID=91049417, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-349411577, memory address=7f87aad2d000, size=1ff000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5870, operation=mprotect, protection=0, source=syscall, srcID=-349411577, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1609003269, memory address=7f87aaf2c000, size=2000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5871, operation=mmap (write), protection=3, source=syscall, srcID=1609003269, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-872153412, event id=5871, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-872153412, event id=5871, operation=mmap, pid=2672, source=syscall, srcID=1609003269, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-148634943, memory address=7f87a9de4000, size=215400, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5896, operation=mmap (write), protection=5, source=syscall, srcID=-148634943, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-872153412, event id=5896, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-872153412, event id=5896, operation=mmap, pid=2672, source=syscall, srcID=-148634943, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=903787870, memory address=7f87a9df9000, size=1ff000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5897, operation=mprotect, protection=0, source=syscall, srcID=903787870, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1432764580, memory address=7f87a9ff8000, size=2000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5898, operation=mmap (write), protection=3, source=syscall, srcID=-1432764580, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-872153412, event id=5898, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-872153412, event id=5898, operation=mmap, pid=2672, source=syscall, srcID=-1432764580, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=1212356357, event id=5899, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1203710442, memory address=7f87a9bdf000, size=204240, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5900, operation=mmap (write), protection=5, source=syscall, srcID=1203710442, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=1212356357, event id=5900, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=1212356357, event id=5900, operation=mmap, pid=2672, source=syscall, srcID=1203710442, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=653855909, memory address=7f87a9be3000, size=1ff000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5901, operation=mprotect, protection=0, source=syscall, srcID=653855909, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1682696541, memory address=7f87a9de2000, size=2000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5902, operation=mmap (write), protection=3, source=syscall, srcID=-1682696541, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=1212356357, event id=5902, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=1212356357, event id=5902, operation=mmap, pid=2672, source=syscall, srcID=-1682696541, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=553451982, event id=5903, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=991400865, memory address=7f87a98dd000, size=301128, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5904, operation=mmap (write), protection=5, source=syscall, srcID=991400865, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=553451982, event id=5904, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=553451982, event id=5904, operation=mmap, pid=2672, source=syscall, srcID=991400865, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1537937221, memory address=7f87a99de000, size=1ff000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5905, operation=mprotect, protection=0, source=syscall, srcID=-1537937221, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-329396046, memory address=7f87a9bdd000, size=2000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5906, operation=mmap (write), protection=3, source=syscall, srcID=-329396046, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=553451982, event id=5906, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=553451982, event id=5906, operation=mmap, pid=2672, source=syscall, srcID=-329396046, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-804260828, event id=5907, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1289233464, memory address=7f87a96b7000, size=225288, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5908, operation=mmap (write), protection=5, source=syscall, srcID=-1289233464, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-804260828, event id=5908, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-804260828, event id=5908, operation=mmap, pid=2672, source=syscall, srcID=-1289233464, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1766308064, memory address=7f87a96dc000, size=1ff000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5909, operation=mprotect, protection=0, source=syscall, srcID=1766308064, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-570244386, memory address=7f87a98db000, size=2000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5910, operation=mmap (write), protection=3, source=syscall, srcID=-570244386, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-804260828, event id=5910, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-804260828, event id=5910, operation=mmap, pid=2672, source=syscall, srcID=-570244386, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1287213328, event id=5911, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1511490671, memory address=7f87a94a2000, size=214148, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5912, operation=mmap (write), protection=5, source=syscall, srcID=-1511490671, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1287213328, event id=5912, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1287213328, event id=5912, operation=mmap, pid=2672, source=syscall, srcID=-1511490671, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-487664467, memory address=7f87a94b6000, size=1ff000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5913, operation=mprotect, protection=0, source=syscall, srcID=-487664467, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1470750379, memory address=7f87a96b5000, size=2000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5914, operation=mmap (write), protection=3, source=syscall, srcID=1470750379, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1287213328, event id=5914, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1287213328, event id=5914, operation=mmap, pid=2672, source=syscall, srcID=1470750379, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1689038001, event id=5915, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1122646989, memory address=7f87a9251000, size=250910, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5916, operation=mmap (write), protection=5, source=syscall, srcID=-1122646989, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1689038001, event id=5916, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1689038001, event id=5916, operation=mmap, pid=2672, source=syscall, srcID=-1122646989, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-354880843, memory address=7f87a929f000, size=200000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5917, operation=mprotect, protection=0, source=syscall, srcID=-354880843, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1655042642, memory address=7f87a949f000, size=3000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5918, operation=mmap (write), protection=3, source=syscall, srcID=1655042642, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1689038001, event id=5918, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1689038001, event id=5918, operation=mmap, pid=2672, source=syscall, srcID=1655042642, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1155682214, epoch=0, path=/lib64/libblkid.so.1, permissions=0755, source=syscall, subtype=file, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1155682214, event id=5919, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=431453507, memory address=7f87a9011000, size=23fb88, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5920, operation=mmap (write), protection=5, source=syscall, srcID=431453507, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1155682214, event id=5920, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1155682214, event id=5920, operation=mmap, pid=2672, source=syscall, srcID=431453507, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=277506069, memory address=7f87a904d000, size=1ff000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5921, operation=mprotect, protection=0, source=syscall, srcID=277506069, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-2058986799, memory address=7f87a924c000, size=4000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5922, operation=mmap (write), protection=3, source=syscall, srcID=-2058986799, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1155682214, event id=5922, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1155682214, event id=5922, operation=mmap, pid=2672, source=syscall, srcID=-2058986799, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1661896651, memory address=7f87a9250000, size=b88, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5923, operation=mmap (write), protection=3, source=syscall, srcID=1661896651, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=815241127, epoch=0, path=/lib64/libuuid.so.1, permissions=0755, source=syscall, subtype=file, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=815241127, event id=5924, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=658221872, memory address=7f87a8e0c000, size=204180, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5925, operation=mmap (write), protection=5, source=syscall, srcID=658221872, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=815241127, event id=5925, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=815241127, event id=5925, operation=mmap, pid=2672, source=syscall, srcID=658221872, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=108368176, memory address=7f87a8e10000, size=1ff000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5926, operation=mprotect, protection=0, source=syscall, srcID=108368176, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-418859730, memory address=7f87a900f000, size=2000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5927, operation=mmap (write), protection=3, source=syscall, srcID=-418859730, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=815241127, event id=5927, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=815241127, event id=5927, operation=mmap, pid=2672, source=syscall, srcID=-418859730, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1859771599, epoch=0, path=/lib64/libattr.so.1, permissions=0755, source=syscall, subtype=file, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1859771599, event id=5928, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=207885823, memory address=7f87a8c07000, size=204170, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5929, operation=mmap (write), protection=5, source=syscall, srcID=207885823, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1859771599, event id=5929, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1859771599, event id=5929, operation=mmap, pid=2672, source=syscall, srcID=207885823, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1461668671, memory address=7f87a8c0b000, size=1ff000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5930, operation=mprotect, protection=0, source=syscall, srcID=1461668671, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-874883779, memory address=7f87a8e0a000, size=2000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5931, operation=mmap (write), protection=3, source=syscall, srcID=-874883779, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1859771599, event id=5931, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1859771599, event id=5931, operation=mmap, pid=2672, source=syscall, srcID=-874883779, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1289324119, epoch=0, path=/lib64/libelf.so.1, permissions=0755, source=syscall, subtype=file, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=1289324119, event id=5932, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1163934977, memory address=7f87a89ef000, size=2171c0, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5933, operation=mmap (write), protection=5, source=syscall, srcID=1163934977, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=1289324119, event id=5933, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=1289324119, event id=5933, operation=mmap, pid=2672, source=syscall, srcID=1163934977, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1011332653, memory address=7f87a8a06000, size=1ff000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5934, operation=mprotect, protection=0, source=syscall, srcID=1011332653, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1325219797, memory address=7f87a8c05000, size=2000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5935, operation=mmap (write), protection=3, source=syscall, srcID=-1325219797, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=1289324119, event id=5935, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=1289324119, event id=5935, operation=mmap, pid=2672, source=syscall, srcID=-1325219797, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1592705796, event id=5936, flags=O_RDONLY, operation=open, source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1086302202, memory address=7f87a87df000, size=20fd68, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5937, operation=mmap (write), protection=5, source=syscall, srcID=1086302202, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1592705796, event id=5937, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1592705796, event id=5937, operation=mmap, pid=2672, source=syscall, srcID=1086302202, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1966367549, memory address=7f87a87ee000, size=1ff000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5938, operation=mprotect, protection=0, source=syscall, srcID=1966367549, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-370184901, memory address=7f87a89ed000, size=2000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5939, operation=mmap (write), protection=3, source=syscall, srcID=-370184901, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1592705796, event id=5939, operation=mmap (read), source=syscall, srcID=-2101277694, time=1571944996.421, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-1592705796, event id=5939, operation=mmap, pid=2672, source=syscall, srcID=-370184901, time=1571944996.421, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-370214692, memory address=7f87a89ed000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5940, operation=mprotect, protection=1, source=syscall, srcID=-370214692, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1325249588, memory address=7f87a8c05000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5941, operation=mprotect, protection=1, source=syscall, srcID=-1325249588, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-874913570, memory address=7f87a8e0a000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5942, operation=mprotect, protection=1, source=syscall, srcID=-874913570, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-418889521, memory address=7f87a900f000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5943, operation=mprotect, protection=1, source=syscall, srcID=-418889521, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-2059016590, memory address=7f87a924c000, size=3000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5944, operation=mprotect, protection=1, source=syscall, srcID=-2059016590, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-570274177, memory address=7f87a98db000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5945, operation=mprotect, protection=1, source=syscall, srcID=-570274177, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1655012851, memory address=7f87a949f000, size=2000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5946, operation=mprotect, protection=1, source=syscall, srcID=1655012851, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1470720588, memory address=7f87a96b5000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5947, operation=mprotect, protection=1, source=syscall, srcID=1470720588, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-329425837, memory address=7f87a9bdd000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5948, operation=mprotect, protection=1, source=syscall, srcID=-329425837, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1682726332, memory address=7f87a9de2000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5949, operation=mprotect, protection=1, source=syscall, srcID=-1682726332, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1432794371, memory address=7f87a9ff8000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5950, operation=mprotect, protection=1, source=syscall, srcID=-1432794371, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=2007394653, memory address=7f87aa23a000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5951, operation=mprotect, protection=1, source=syscall, srcID=2007394653, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1608973478, memory address=7f87aaf2c000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5952, operation=mprotect, protection=1, source=syscall, srcID=1608973478, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1341193782, memory address=7f87aa43f000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5953, operation=mprotect, protection=1, source=syscall, srcID=1341193782, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=73780740, memory address=7f87aa647000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5954, operation=mprotect, protection=1, source=syscall, srcID=73780740, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1955574308, memory address=7f87aa878000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5955, operation=mprotect, protection=1, source=syscall, srcID=1955574308, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=2121661183, memory address=7f87ab17e000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5956, operation=mprotect, protection=1, source=syscall, srcID=2121661183, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1013490976, memory address=7f87aac0f000, size=5000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5957, operation=mprotect, protection=1, source=syscall, srcID=-1013490976, time=1571944996.421, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=1865789274, event id=5958, operation=recv, size=68, source=syscall, srcID=2099513405, time=1571944996.441, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=1865789274, event id=5959, operation=recv, size=68, source=syscall, srcID=2099513405, time=1571944996.441, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=1865789274, event id=5960, operation=recv, size=68, source=syscall, srcID=2099513405, time=1571944996.441, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=1865789274, event id=5961, operation=recv, size=68, source=syscall, srcID=2099513405, time=1571944996.441, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=1865789274, event id=5962, operation=recv, size=68, source=syscall, srcID=2099513405, time=1571944996.441, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=1865789274, event id=5963, operation=recv, size=68, source=syscall, srcID=2099513405, time=1571944996.441, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=1865789274, event id=5964, operation=recv, size=68, source=syscall, srcID=2099513405, time=1571944996.441, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=1865789274, event id=5965, operation=recv, size=68, source=syscall, srcID=2099513405, time=1571944996.441, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=1865789274, event id=5966, operation=recv, size=68, source=syscall, srcID=2099513405, time=1571944996.441, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=1865789274, event id=5967, operation=recv, size=68, source=syscall, srcID=2099513405, time=1571944996.441, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=1865789274, event id=5968, operation=recv, size=101, source=syscall, srcID=2099513405, time=1571944996.441, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-563671305, epoch=3, path=/var/lib/rsyslog/imjournal.state.tmp, permissions=0600, source=syscall, subtype=file, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-549303675, event id=5969, flags=O_WRONLY|O_TRUNC|O_CREAT, mode=666, operation=create, source=syscall, srcID=-563671305, time=1571944996.441, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-549303675, event id=5970, operation=mmap (write), protection=3, source=syscall, srcID=686738878, time=1571944996.441, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-563671305, event id=5971, operation=rename (read), source=syscall, srcID=-549303675, time=1571944996.441, type=Used}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1407456334, epoch=3, path=/var/lib/rsyslog/imjournal.state, permissions=0600, source=syscall, subtype=file, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-549303675, event id=5971, operation=rename (write), source=syscall, srcID=1407456334, time=1571944996.441, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-563671305, event id=5971, operation=rename, pid=1330, source=syscall, srcID=1407456334, time=1571944996.441, type=WasDerivedFrom}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=1679141706, memory address=7f87ab3cd000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5972, operation=mprotect, protection=1, source=syscall, srcID=1679141706, time=1571944996.471, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-2079602119, memory address=7f87ab5f6000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5973, operation=mprotect, protection=1, source=syscall, srcID=-2079602119, time=1571944996.471, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putVertex INFO: vertex = 
+{ID=-1600636950, memory address=7f87ab7fc000, size=1000, source=syscall, subtype=memory, tgid=2672, type=Artifact}
+Oct 24, 2019 2:24:16 PM spade.core.AbstractReporter putEdge INFO: edge = 
+{destID=-2101277694, event id=5974, operation=mprotect, protection=1, source=syscall, srcID=-1600636950, time=1571944996.471, type=WasGeneratedBy}
+Oct 24, 2019 2:24:16 PM spade.reporter.audit.AuditEventReader getEventId WARNING: Failed to get event id from line: node=localhost.localdomain type=SYSCALL msg=audit(1571944996.47
+java.lang.StringIndexOutOfBoundsException: String index out of range: -1
+	at java.lang.String.substring(String.java:1967)
+	at spade.reporter.audit.AuditEventReader.getEventId(AuditEventReader.java:318)
+	at spade.reporter.audit.AuditEventReader.readEventData(AuditEventReader.java:402)
+	at spade.reporter.Audit$2.run(Audit.java:1279)
+	at java.lang.Thread.run(Thread.java:748)
+
+Oct 24, 2019 2:24:16 PM spade.reporter.audit.AuditEventReader getEventTime WARNING: Failed to get time from line: node=localhost.localdomain type=SYSCALL msg=audit(1571944996.47
+java.lang.StringIndexOutOfBoundsException: String index out of range: -51
+	at java.lang.String.substring(String.java:1967)
+	at spade.reporter.audit.AuditEventReader.getEventTime(AuditEventReader.java:337)
+	at spade.reporter.audit.AuditEventReader.readEventData(AuditEventReader.java:403)
+	at spade.reporter.Audit$2.run(Audit.java:1279)
+	at java.lang.Thread.run(Thread.java:748)
+
+Oct 24, 2019 2:24:16 PM spade.reporter.Audit$2 run SEVERE: Stopped reading event stream. 
+java.lang.Exception: Invalid time 'null' or event-id 'null' in record: node=localhost.localdomain type=SYSCALL msg=audit(1571944996.47
+	at spade.reporter.audit.AuditEventReader.readEventData(AuditEventReader.java:407)
+	at spade.reporter.Audit$2.run(Audit.java:1279)
+	at java.lang.Thread.run(Thread.java:748)
+
+Oct 24, 2019 2:24:16 PM spade.reporter.audit.AuditEventReader printStats INFO: Overall rate: 14.994 records/sec in 149.858 seconds. Interval rate: 1,646.341 records/sec in 0.164 seconds.
+Oct 24, 2019 2:24:16 PM spade.utility.Execute$Output log INFO: Command "auditctl -D" succeeded with output: [No rules].
+Oct 24, 2019 2:24:16 PM spade.utility.CommonFunctions closePrintSizeAndDeleteExternalMemoryMap INFO: Audit[ArtifactsMap]: Size of the external map on disk: 14 KB
+Oct 24, 2019 2:24:17 PM spade.utility.CommonFunctions closePrintSizeAndDeleteExternalMemoryMap INFO: ProcessManager[ProcessUnitStatesMap]: Size of the external map on disk: 14 KB
+Oct 24, 2019 2:24:17 PM spade.reporter.Audit$2 run INFO: Exiting event reader thread for process: spadeAuditBridge
+Oct 24, 2019 2:24:17 PM spade.core.AbstractReporter produceBytesMsgToKafka INFO: topic = abc7 value = [B@7ea3927c
+Oct 24, 2019 2:25:17 PM spade.reporter.Audit printStats INFO: Internal buffer size: 0, JVM memory in use: 38MB
+Oct 24, 2019 2:25:17 PM spade.core.Kernel shutdown INFO: SPADE stopped.
