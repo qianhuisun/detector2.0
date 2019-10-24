@@ -50,3 +50,5 @@ Oct 24, 2019 1:46:46 PM spade.utility.CommonFunctions closePrintSizeAndDeleteExt
 Oct 24, 2019 1:46:46 PM spade.utility.CommonFunctions closePrintSizeAndDeleteExternalMemoryMap INFO: ProcessManager[ProcessUnitStatesMap]: Size of the external map on disk: 13 KB
 Oct 24, 2019 1:46:46 PM spade.reporter.Audit$2 run INFO: Exiting event reader thread for process: spadeAuditBridge
 Oct 24, 2019 1:46:47 PM spade.core.AbstractReporter produceBytesMsgToKafka INFO: topic = abc7 value = [B@5c6b4cd4
+Oct 24, 2019 1:47:47 PM spade.reporter.Audit printStats INFO: Internal buffer size: 0, JVM memory in use: 32MB
+Oct 24, 2019 1:47:47 PM spade.core.Kernel shutdown INFO: SPADE stopped.
