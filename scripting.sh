@@ -1,6 +1,6 @@
 #!/bin/sh
 i=1
-while [ $i -le 10 ]
+while [ $i -le 100 ]
 do
   sh -c "echo 'echo Hello World'>> ./test"
   rename test test_$i test
