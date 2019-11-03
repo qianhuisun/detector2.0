@@ -1,7 +1,0 @@
-0000000000000000000000000000000000000000 4a642fc0aed0612eed87c9443592e9b1578d1431 aaron <aaron@localhost.localdomain> 1571859547 -0500	initial pull
-4a642fc0aed0612eed87c9443592e9b1578d1431 32bc2e6bf88c3e2619cb67168c791e22a6dfbba8 aaron <aaron@localhost.localdomain> 1571942238 -0500	pull origin master: Fast-forward
-32bc2e6bf88c3e2619cb67168c791e22a6dfbba8 5961a3712175b2e87297dac72ca083aee231aabb aaron <aaron@localhost.localdomain> 1571942552 -0500	commit: Get data from collector
-5961a3712175b2e87297dac72ca083aee231aabb 25116dfa35614c682e69da1d4864043fee58453d aaron <aaron@localhost.localdomain> 1571942887 -0500	commit: Get data
-25116dfa35614c682e69da1d4864043fee58453d 8f2d9211a29344e51c59b51408e1852f6b6176fc aaron <aaron@localhost.localdomain> 1571945018 -0500	commit: Get data
-8f2d9211a29344e51c59b51408e1852f6b6176fc de6c1069ab276f145bf06d3b5e9d9030ce917c88 aaron <aaron@localhost.localdomain> 1571945696 -0500	commit: Get data
-de6c1069ab276f145bf06d3b5e9d9030ce917c88 02f14464a2ec403bc7c9c88b5509ce420863281e aaron <aaron@localhost.localdomain> 1572105900 -0500	commit: useradd execute for 100 times

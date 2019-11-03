@@ -1,5 +1,0 @@
-0000000000000000000000000000000000000000 3df89ce7f06de629747910b7de301d878560f640 Aaron <aaron@localhost.localdomain> 1572106114 -0500	commit (initial): useradd execute 100 times
-3df89ce7f06de629747910b7de301d878560f640 0a561c63063eb94eac139b881f34c9f4a51ba183 Aaron <aaron@localhost.localdomain> 1572106301 -0500	pull: Merge made by the 'recursive' strategy.
-0a561c63063eb94eac139b881f34c9f4a51ba183 50990b2254fe1210c7ea427d6380659c1a4c9291 Aaron <aaron@localhost.localdomain> 1572118570 -0500	commit: find mozilia sqlite
-50990b2254fe1210c7ea427d6380659c1a4c9291 449f56f6c51cfc0ceeccfbd1c40e0384f110cd77 Aaron <aaron970913@gmail.com> 1572119382 -0500	commit: read /etc/passwd
-449f56f6c51cfc0ceeccfbd1c40e0384f110cd77 9cc75d0e5a9dc7e0a5ed375ca55759e29fbe576a root <root@localhost.localdomain> 1572230573 -0500	commit: audit logs
