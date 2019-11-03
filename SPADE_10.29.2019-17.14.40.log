@@ -1,0 +1,54 @@
+Oct 29, 2019 5:14:41 PM spade.core.Kernel addCommand INFO: Adding reporter: Audit
+Oct 29, 2019 5:14:41 PM spade.reporter.Audit initKafkaProducer INFO: bootstrap.servers = 192.168.1.128:9092
+Oct 29, 2019 5:14:41 PM spade.reporter.Audit initKafkaProducer INFO: acks = all
+Oct 29, 2019 5:14:41 PM spade.reporter.Audit initKafkaProducer INFO: retries = 0
+Oct 29, 2019 5:14:41 PM spade.reporter.Audit initKafkaProducer INFO: batch.size = 16384
+Oct 29, 2019 5:14:41 PM spade.reporter.Audit initKafkaProducer INFO: linger.ms = 1
+Oct 29, 2019 5:14:41 PM spade.reporter.Audit initKafkaProducer INFO: buffer.memory = 33554432
+Oct 29, 2019 5:14:41 PM spade.reporter.Audit initKafkaProducer INFO: topic = abc7
+Oct 29, 2019 5:14:41 PM spade.reporter.Audit initKafkaProducer INFO: repeat times = 1000
+Oct 29, 2019 5:14:41 PM spade.utility.HostInfo$ReadFromOperatingSystem readTA1Version SEVERE: Failed to check if file is readable: /etc/tc-version
+java.lang.Exception: Path does not exist
+	at spade.utility.FileUtility.isFile(FileUtility.java:170)
+	at spade.utility.FileUtility.isFileReadable(FileUtility.java:189)
+	at spade.utility.HostInfo$ReadFromOperatingSystem.readTA1Version(HostInfo.java:250)
+	at spade.utility.HostInfo$ReadFromOperatingSystem.readSafe(HostInfo.java:114)
+	at spade.utility.HostInfo.generateCurrentHostFile(HostInfo.java:678)
+	at spade.reporter.Audit.createHostVertex(Audit.java:265)
+	at spade.reporter.Audit.initKafkaProducer(Audit.java:323)
+	at spade.reporter.Audit.launch(Audit.java:810)
+	at spade.core.Kernel.addCommand(Kernel.java:487)
+	at spade.core.Kernel.executeCommand(Kernel.java:329)
+	at spade.core.Kernel.configCommand(Kernel.java:377)
+	at spade.core.Kernel.main(Kernel.java:195)
+
+Oct 29, 2019 5:14:41 PM spade.core.AbstractReporter produceBytesMsgToKafka INFO: topic = abc7 value = [B@5d11346a
+Oct 29, 2019 5:15:41 PM spade.reporter.Audit initFlagsFromArguments SEVERE: km flag is 'true': null
+Oct 29, 2019 5:15:41 PM spade.reporter.Audit initFlagsFromArguments INFO: Audit flags: syscall=null, fileIO=true, netIO=true, units=true, waitForLog=true, netfilter=false, refineNet=false, localEndpoints=true, handleLocalEndpoints=true, failfast=true, mergeUnit=null, harden=false, reportKill=true
+Oct 29, 2019 5:15:41 PM spade.reporter.Audit initFlagsFromArguments INFO: Audit flags (Globals): 'unixSockets'='true', 'versionNetworkSockets'='false', 'versionFiles'='true', 'versionMemorys'='true', 'versionNamedPipes'='true', 'versionUnnamedPipes'='true', 'versionUnknowns'='true', 'versionUnixSockets'='true', 'versionUnixSocketPairs'='true', 'versionNetworkSocketPairs'='false', 'versions'='false', 'epochs'='true', 'permissions'='true'
+Oct 29, 2019 5:15:42 PM spade.utility.CommonFunctions createExternalMemoryMapInstance INFO: Audit[ArtifactsMap]: ExternalMemoryMap created with params: cache size=100,000, db path=tmp/artifactsDB_1572387341805, db name=artifactsDB_1572387341805, false positive prob=0, expected number of elements=1,000,000, reporting interval in millis=120,000
+Oct 29, 2019 5:15:42 PM spade.utility.CommonFunctions createExternalMemoryMapInstance INFO: ProcessManager[ProcessUnitStatesMap]: ExternalMemoryMap created with params: cache size=66,000, db path=tmp/processStatesDB_1572387342687, db name=processStatesDB_1572387342687, false positive prob=0, expected number of elements=1,000,000, reporting interval in millis=120,000
+Oct 29, 2019 5:15:42 PM spade.reporter.Audit runSpadeAuditBridge INFO: Succesfully executed the command: 'bin/spadeAuditBridge -u -s /var/run/audispd_events'
+Oct 29, 2019 5:15:42 PM spade.reporter.Audit$2 run INFO: Starting get AuditEventReader Thread
+Oct 29, 2019 5:15:44 PM spade.reporter.Audit listOfPidsToIgnore INFO: pidChecker is : java.lang.UNIXProcess@4562e04d
+Oct 29, 2019 5:15:44 PM spade.reporter.Audit addKernelModule INFO: Command "insmod lib/kernel-modules/netio_controller.ko syscall_success="1" pids_ignore="859,95,861,21074,1252,1115" ppids_ignore="859,95,861,21074,1252,1115" net_io="1" ignore_uids="1"" succeeded with output: [].
+Oct 29, 2019 5:15:44 PM spade.utility.Execute$Output log INFO: Command "auditctl -D" succeeded with output: [No rules].
+Oct 29, 2019 5:15:44 PM spade.utility.Execute$Output log INFO: Command "auditctl -a always,exclude -F msgtype=PROCTITLE" succeeded with output: [].
+Oct 29, 2019 5:15:44 PM spade.utility.Execute$Output log INFO: Command "auditctl -a exit,always -F arch=b64 -S exit -S exit_group -F pid!=859 -F pid!=95 -F pid!=861 -F pid!=21074 -F pid!=1252 -F pid!=1115 -F ppid!=859 -F ppid!=95 -F ppid!=861 -F ppid!=21074 -F ppid!=1252 -F ppid!=1115 " succeeded with output: [].
+Oct 29, 2019 5:15:44 PM spade.utility.Execute$Output log INFO: Command "auditctl -a exit,always -F arch=b64 -S readv -S pread -S preadv -S writev -S pwrite -S pwritev -S mmap -S mprotect -S unlink -S unlinkat -S link -S linkat -S symlink -S symlinkat -S clone -S fork -S vfork -S execve -S open -S creat -S openat -S mknodat -S mknod -S dup -S dup2 -S dup3 -S fcntl -S rename -S renameat -S setuid -S setreuid -S setgid -S setregid -S chmod -S fchmod -S fchmodat -S pipe -S pipe2 -S truncate -S ftruncate -S init_module -S finit_module -S tee -S splice -S vmsplice -S socketpair -S ptrace -F success=1 -F pid!=859 -F pid!=95 -F pid!=861 -F pid!=21074 -F pid!=1252 -F pid!=1115 -F ppid!=859 -F ppid!=95 -F ppid!=861 -F ppid!=21074 -F ppid!=1252 -F ppid!=1115 " succeeded with output: [].
+Oct 29, 2019 5:15:44 PM spade.core.Kernel addCommand INFO: Reporter added: Audit fileIO=true netIO=true unixSockets=true versions=false units=true
+Oct 29, 2019 5:19:58 PM spade.core.Kernel shutdown INFO: Shutting down SPADE....
+Oct 29, 2019 5:19:58 PM spade.core.Kernel configCommand INFO: Usage not appropriate
+Oct 29, 2019 5:19:58 PM spade.utility.Execute$Output log INFO: Command "rmmod netio_controller" succeeded with output: [].
+Oct 29, 2019 5:19:58 PM spade.reporter.Audit shutdown INFO: Successfully removed the kernel controller module
+Oct 29, 2019 5:19:58 PM spade.reporter.Audit shutdown INFO: Going to wait for event reader thread to finish
+Oct 29, 2019 5:19:58 PM spade.reporter.Audit$1 run INFO: spadeAuditBridge output: Flushing buffer before stopping
+Oct 29, 2019 5:19:58 PM spade.reporter.Audit$1 run INFO: Exiting error reader thread for process: spadeAuditBridge
+Oct 29, 2019 5:19:58 PM spade.reporter.audit.AuditEventReader printStats INFO: Overall rate: 0 records/sec in 255.959 seconds. Interval rate: 0 records/sec in 255.959 seconds.
+Oct 29, 2019 5:19:58 PM spade.utility.Execute$Output log INFO: Command "auditctl -D" succeeded with output: [No rules].
+Oct 29, 2019 5:19:59 PM spade.utility.CommonFunctions closePrintSizeAndDeleteExternalMemoryMap INFO: Audit[ArtifactsMap]: Size of the external map on disk: 15 KB
+Oct 29, 2019 5:19:59 PM spade.utility.CommonFunctions closePrintSizeAndDeleteExternalMemoryMap INFO: ProcessManager[ProcessUnitStatesMap]: Size of the external map on disk: 15 KB
+Oct 29, 2019 5:19:59 PM spade.reporter.Audit$2 run INFO: Exiting event reader thread for process: spadeAuditBridge
+Oct 29, 2019 5:19:59 PM spade.core.AbstractReporter produceBytesMsgToKafka INFO: topic = abc7 value = [B@2a66c8f7
+Oct 29, 2019 5:20:59 PM spade.reporter.Audit printStats INFO: Internal buffer size: 0, JVM memory in use: 36MB
+Oct 29, 2019 5:20:59 PM spade.core.Kernel shutdown INFO: SPADE stopped.
