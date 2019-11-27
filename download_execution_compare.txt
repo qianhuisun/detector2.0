@@ -1,0 +1,14 @@
+{ID=1034902122, epoch=1, path=/home/dove/git_repository/test/collector_test/echo-art-fish.sh, permissions=0644, source=syscall, subtype=file, type=Artifact}
+{ID=1115206352, command line=rename echo-art-fish.sh test_2 echo-art-fish.sh, cwd=/home/dove/git_repository/test/collector_test, egid=0, euid=0, gid=0, name=rename, pid=8384, ppid=8375, source=syscall, start time=1572860462.270, type=Process, uid=0, unit=0}
+{ID=-878565354, epoch=0, path=/home/dove/git_repository/test/collector_test/test_2, permissions=0644, source=syscall, subtype=file, type=Artifact}
+{destID=1034902122, event id=463023, operation=rename, pid=8384, source=syscall, srcID=-878565354, time=1572860462.273, type=WasDerivedFrom}
+{ID=-878565354, epoch=0, path=/home/dove/git_repository/test/collector_test/test_2, permissions=0755, source=syscall, subtype=file, type=Artifact}
+{destID=1722863992, event id=463043, mode=755, operation=chmod, source=syscall, srcID=-878565354, time=1572860462.276, type=WasGeneratedBy}
+{destID=-878565354, event id=463046, operation=load, source=syscall, srcID=201882856, time=1572860462.277, type=Used}
+{destID=-878565354, event id=463082, operation=read, size=75, source=syscall, srcID=201882856, time=1572860462.280, type=Used}
+{destID=-2124864088, event id=463134, operation=unlink, source=syscall, srcID=-878565354, time=1572860462.287, type=WasGeneratedBy}
+
+
+[19:18:10.511989198] (+0.000004337) localhost.localdomain syscall_entry_open: { cpu_id = 0 }, { filename = "echo-art-fish.sh", flags = 577, mode = 438 }
+[19:18:10.514374093] (+0.000073569) localhost.localdomain syscall_entry_rename: { cpu_id = 0 }, { oldname = "echo-art-fish.sh", newname = "test_1" }
+[19:18:10.517664861] (+0.000314488) localhost.localdomain syscall_entry_open: { cpu_id = 0 }, { filename = "./test_1", flags = 0, mode = 8 }
