@@ -1,0 +1,3 @@
+[15:44:09.528675071] (+0.000003380) aaron-VirtualBox syscall_entry_write: { cpu_id = 1 }, { pid = 9182 }, { fd = 1, buf = 93993569751600, count = 19 }
+[15:44:09.528797654] (+0.000002697) aaron-VirtualBox syscall_entry_write: { cpu_id = 1 }, { pid = 9182 }, { fd = 1, buf = 93993569751600, count = 19 }
+[15:44:09.528870104] (+0.000002580) aaron-VirtualBox syscall_entry_write: { cpu_id = 1 }, { pid = 9182 }, { fd = 1, buf = 93993569751600, count = 19 }
