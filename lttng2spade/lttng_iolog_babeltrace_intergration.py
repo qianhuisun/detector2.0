@@ -52,6 +52,9 @@ line_bbt_count = 1
 while line_io:
     str_list = re.split('\[|\,|\]|\s+', line_io)
     length = len(str_list)
+    l_start_time = ""
+    l_pid = ""
+    l_fileName = ""
     if length == 13:
         l_start_time = str_list[1]
         l_pid = str_list[9]
