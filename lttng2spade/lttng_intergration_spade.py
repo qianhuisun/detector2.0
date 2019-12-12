@@ -64,7 +64,9 @@ while line1:
         # add file vertex line when filename is not in file_set
         if filename not in file_set:
             file_set.append(filename)
+            print(dest_id)
             line2 = "{ID=%s, epoch=0, path=%s, source=syscall, subtype=file, type=Artifact}\n" % (dest_id, filename)
+            print(line2)
             f2.write(line2)
         # add proc vertex line when pid is not in proc_set
         if pid not in proc_set:
@@ -89,7 +91,9 @@ while line1:
         # add file vertex line when filename is not in file_set
         if filename not in file_set:
             file_set.append(filename)
+            print(dest_id)
             line2 = "{ID=%s, epoch=0, path=%s, source=syscall, subtype=unknown, type=Artifact}\n" % (dest_id, filename)
+            print(line2)
             f2.write(line2)
         # add proc vertex line when pid is not in proc_set
         if pid not in proc_set:
