@@ -112,11 +112,6 @@ while line_bbt:
     b_pid = getParameters("pid", line_bbt)
     b_fd = getParameters("fd", line_bbt)
 
-    #print("Now outputing babeltrace(%s)" % (line_bbt_count))
-    #print("b_time_stamp = " + str(b_time_stamp))
-    #print("b_pid = " + str(b_pid))
-    #print("b_fd = " + str(b_fd))
-
     line3 = line_bbt
     
     f3.write(line3)

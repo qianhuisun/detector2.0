@@ -28,8 +28,11 @@ def get_filename(line):
     if len(res) == 0:
         return "filename not found"
     # syscall_entry_openat 目前输出中有两个filename 值是一样的，仅返回一个
-    filename = re.findall(r'".*"', res[0])
-    return filename[0][1:-1]
+    filename = re.findall(r'".*"', res[0])[0][1:-1]
+    # 去掉开头可能存在的 ./
+    if filename.startswith("./"):
+        filename = filename[2:]
+    return filename
 
 def convert_time(datetime_str):
     datetime_obj = datetime.strptime("08/12/19 " + datetime_str[:-6], '%d/%m/%y %H:%M:%S.%f')
@@ -49,7 +52,17 @@ proc_set = []
 
 while line1:
     syscall = get_syscall(line1)
-    if syscall == "syscall_entry_openat":
+    if syscall == "syscall_entry_execve":
+        filename = get_filename(line1)
+        pid = get_digital_parameters("pid", line1)
+        time_str = get_timeStamp(line1)
+        time_flt = convert_time(time_str)
+        # write this proc vertex line because it may contains cmd line
+        line2 = "{ID=%s, command line=%s, egid=0, euid=0, gid=0, pid=%s, ppid=0, seen time=%.3f, source=syscall, type=Process, uid=0, unit=0}\n" % (pid, filename, pid, time_flt)
+        f2.write(line2)
+        if pid not in proc_set:
+            proc_set.append(pid)
+    elif syscall == "syscall_entry_openat":
         operation = "open"
         _type = "Used"
         filename = get_filename(line1)
@@ -64,9 +77,7 @@ while line1:
         # add file vertex line when filename is not in file_set
         if filename not in file_set:
             file_set.append(filename)
-            print(dest_id)
             line2 = "{ID=%s, epoch=0, path=%s, source=syscall, subtype=file, type=Artifact}\n" % (dest_id, filename)
-            print(line2)
             f2.write(line2)
         # add proc vertex line when pid is not in proc_set
         if pid not in proc_set:
@@ -91,9 +102,7 @@ while line1:
         # add file vertex line when filename is not in file_set
         if filename not in file_set:
             file_set.append(filename)
-            print(dest_id)
             line2 = "{ID=%s, epoch=0, path=%s, source=syscall, subtype=unknown, type=Artifact}\n" % (dest_id, filename)
-            print(line2)
             f2.write(line2)
         # add proc vertex line when pid is not in proc_set
         if pid not in proc_set:
