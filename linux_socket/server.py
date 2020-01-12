@@ -1,12 +1,12 @@
 import socket
 import os
 
-if os.path.exists("/tmp/python_unix_sockets_example"):
-    os.remove("/tmp/python_unix_sockets_example")
+if os.path.exists("/tmp/python_unix_sockets_qianhui"):
+    os.remove("/tmp/python_unix_sockets_qianhui")
 
 print("Opening socket...")
 server = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM)
-server.bind("/tmp/python_unix_sockets_example")
+server.bind("/tmp/python_unix_sockets_qianhui")
 
 print("Listening...")
 while True:
@@ -21,5 +21,5 @@ while True:
 print("-" * 20)
 print("Shutting down...")
 server.close()
-os.remove("/tmp/python_unix_sockets_example")
+os.remove("/tmp/python_unix_sockets_qianhui")
 print("Done")
