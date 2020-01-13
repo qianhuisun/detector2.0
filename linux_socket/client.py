@@ -3,9 +3,9 @@ import socket
 import os
 
 print("Connecting...")
-if os.path.exists("/tmp/python_unix_sockets_qianhui"):
+if os.path.exists("/tmp/test_qianhui"):
     client = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM)
-    client.connect("/tmp/python_unix_sockets_qianhui")
+    client.connect("/tmp/test_qianhui")
     print("Ready.")
     print("Ctrl-C to quit.")
     print("Sending 'DONE' shuts down the server and quits.")
