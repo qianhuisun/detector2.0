@@ -1,7 +1,7 @@
 import socket
 
-connectSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-connectSocket.connect(('127.0.0.1', 8089))
+connectSocket = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
+connectSocket.connect(('::1', 8089))
 
 while True:
     try:

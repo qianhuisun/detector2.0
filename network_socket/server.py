@@ -3,9 +3,9 @@ from select import *
 
 def createServer():
 
-    serverSocket = socket(AF_INET, SOCK_STREAM)
+    serverSocket = socket(AF_INET6, SOCK_STREAM)
         
-    serverSocket.bind(('localhost', 8089))
+    serverSocket.bind(('::1', 8089))
     serverSocket.listen(5)
     print("Server is listening ...")
     serverSocket.settimeout(10)
