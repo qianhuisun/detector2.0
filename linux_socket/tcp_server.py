@@ -13,23 +13,26 @@ def createServer():
     
     serverSocket.listen(5)
     print("Server is listening ...")
-    serverSocket.settimeout(10)
+    serverSocket.settimeout(20)
 
-    connectSocket, addr = serverSocket.accept()
+    while True:
+        print("Listening to next client...")
 
-    try:
-        _bytes = connectSocket.recv(1024)
-        _data = _bytes.decode()
-        print("-" * 20)
-        print(_data)
-        _bytes = connectSocket.recv(1024)
-        _data = _bytes.decode()
-        print("-" * 20)
-        print(_data)
-        connectSocket.close()
-    except Exception as e:
-        print(e)
-        connectSocket.close()
+        connectSocket, addr = serverSocket.accept()
+
+        try:
+            _bytes = connectSocket.recv(1024)
+            _data = _bytes.decode()
+            print("-" * 20)
+            print(_data)
+            _bytes = connectSocket.recv(1024)
+            _data = _bytes.decode()
+            print("-" * 20)
+            print(_data)
+            connectSocket.close()
+        except Exception as e:
+            print(e)
+            connectSocket.close()
 
     print("-" * 20)
     print("Server is shutting dowen ...")
