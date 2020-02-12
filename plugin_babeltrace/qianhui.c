@@ -4,6 +4,11 @@
 #include <inttypes.h>
 #include <string.h>
 #include <babeltrace2/babeltrace.h>
+// Qianhui: 02/12/2020 Begin
+#include <stdbool.h>
+
+// Qianhui: 02/12/2020 End
+
  
 /* Sink component's private data */
 struct qianhui_out {
@@ -18,7 +23,7 @@ struct qianhui_out {
 /* Define customed field structure for Payload, Context, etc. */
 struct qianhui_field {
     
-}
+};
 // Qianhui: 02/12/2020 End
 
 
@@ -203,7 +208,7 @@ qianhui_out_graph_is_configured(bt_self_component_sink *self_component_sink)
 /* Print payload field. */
 static
 void print_field(const bt_field *field, const char *name) {
-    bt_field_class_type *field_class_type = bt_field_get_class_type(field);
+    bt_field_class_type field_class_type = bt_field_get_class_type(field);
     const bt_field_class *field_class;
     char buf[64];
     /* Write field's name if it's not NULL */
@@ -282,7 +287,7 @@ void print_field(const bt_field *field, const char *name) {
     } else if (field_class_type == BT_FIELD_CLASS_TYPE_OPTION) {
         const bt_field *option_field =
             bt_field_option_borrow_field_const(field);
-        if (content_field) {
+        if (option_field) {
             print_field(option_field, NULL);
         }
     } else if (field_class_type == BT_FIELD_CLASS_TYPE_VARIANT) {
