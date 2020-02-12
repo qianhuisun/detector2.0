@@ -4,9 +4,7 @@
 #include <inttypes.h>
 #include <string.h>
 #include <babeltrace2/babeltrace.h>
-// Qianhui: 02/12/2020 Begin
 #include <stdbool.h>
-// Qianhui: 02/12/2020 End
 
  
 /* Sink component's private data */
@@ -18,20 +16,13 @@ struct qianhui_out {
     uint64_t index;
 };
 
-// Qianhui: 02/12/2020 Begin
-/* Define customed field structure for Payload, Context, etc. */
-// Qianhui: 02/12/2020 End
 
-
-// Qianhui: 02/12/2020 Begin
 /* Copied from write.c in sink.text.details component */
 static inline
 void format_uint(char *buf, uint64_t value, unsigned int base)
 {
     const char *spec = "%" PRIu64;
     char *buf_start = buf;
-    unsigned int digits_per_group = 3;
-    char sep = ',';
 
     switch (base) {
     case 2:
@@ -40,14 +31,11 @@ void format_uint(char *buf, uint64_t value, unsigned int base)
         spec = "%" PRIx64;
         strcpy(buf, "0x");
         buf_start = buf + 2;
-        digits_per_group = 4;
-        sep = ':';
         break;
     case 8:
         spec = "%" PRIo64;
         strcpy(buf, "0");
         buf_start = buf + 1;
-        sep = ':';
         break;
     case 10:
         break;
@@ -63,8 +51,6 @@ void format_int(char *buf, int64_t value, unsigned int base)
 {
     const char *spec = "%" PRIu64;
     char *buf_start = buf;
-    unsigned int digits_per_group = 3;
-    char sep = ',';
     uint64_t abs_value = value < 0 ? (uint64_t) -value : (uint64_t) value;
 
     if (value < 0) {
@@ -79,14 +65,11 @@ void format_int(char *buf, int64_t value, unsigned int base)
         spec = "%" PRIx64;
         strcpy(buf_start, "0x");
         buf_start += 2;
-        digits_per_group = 4;
-        sep = ':';
         break;
     case 8:
         spec = "%" PRIo64;
         strcpy(buf_start, "0");
         buf_start++;
-        sep = ':';
         break;
     case 10:
         break;
@@ -96,7 +79,6 @@ void format_int(char *buf, int64_t value, unsigned int base)
 
     sprintf(buf_start, spec, abs_value);
 }
-// Qianhui: 02/12/2020 End
 
  
 /*
@@ -173,8 +155,19 @@ qianhui_out_graph_is_configured(bt_self_component_sink *self_component_sink)
     return BT_COMPONENT_CLASS_SINK_GRAPH_IS_CONFIGURED_METHOD_STATUS_OK;
 }
 
-// Qianhui: 02/12/2020 Begin
-/* Print payload field. */
+/* Print timestamp */
+static
+void print_timestamp(const bt_clock_snapshot *clock_snapshot) {
+    int64_t ns_from_origin;
+	char buf[32];
+    bt_clock_snapshot_get_ns_from_origin_status cs_status = bt_clock_snapshot_get_ns_from_origin(clock_snapshot, &ns_from_origin);
+    if (cs_status == BT_CLOCK_SNAPSHOT_GET_NS_FROM_ORIGIN_STATUS_OK) {
+        format_int(buf, ns_from_origin, 10);
+        printf("%s", buf);
+    }
+}
+
+/* Print context, payload, etc. field. */
 static
 void print_field(const bt_field *field, const char *name) {
     bt_field_class_type field_class_type = bt_field_get_class_type(field);
@@ -234,14 +227,14 @@ void print_field(const bt_field *field, const char *name) {
         /* Print JSON object left brace */
         printf("{ ");
         for (int i = 0; i < member_count; ++i) {
+            if (i != 0) {
+                printf(", ");
+            }
             const bt_field_class_structure_member *field_class_structure_member =
                 bt_field_class_structure_borrow_member_by_index_const(field_class, i);
             const bt_field *member_field =
                 bt_field_structure_borrow_member_field_by_index_const(field, i);
             print_field(member_field, bt_field_class_structure_member_get_name(field_class_structure_member));
-            if (i < member_count - 1) {
-                printf(", ");
-            }
         }
         /* Print JSON object right brace */
         printf(" }");
@@ -250,12 +243,12 @@ void print_field(const bt_field *field, const char *name) {
         /* Print JSON array left bracket */
         printf("[ ");
         for (int i = 0; i < element_count; ++i) {
+            if (i != 0) {
+                printf(", ");
+            }
             const bt_field *element_field = 
                 bt_field_array_borrow_element_field_by_index_const(field, i);
             print_field(element_field, NULL);
-            if (i < element_count - 1) {
-                printf(", ");
-            }
         }
         /* Print JSON array right bracket */
         printf(" ]");
@@ -271,7 +264,6 @@ void print_field(const bt_field *field, const char *name) {
         print_field(variant_field, NULL);
     } 
 }
-// Qianhui: 02/12/2020 End
 
  
 /*
@@ -289,26 +281,70 @@ void print_message(struct qianhui_out *qianhui_out, const bt_message *message)
     /* Borrow the event message's event and its class */
     const bt_event *event = bt_message_event_borrow_event_const(message);
     const bt_event_class *event_class = bt_event_borrow_class_const(event);
- 
+    
+    /* Get timestamp */
+    const bt_clock_snapshot *clock_snapshot = bt_message_event_borrow_default_clock_snapshot_const(message);
+
+    /* Get hostname */
+	const bt_stream *stream = bt_event_borrow_stream_const(event);
+	const bt_trace *trace = bt_stream_borrow_trace_const(stream);
+    const bt_value *hostname_value = bt_trace_borrow_environment_entry_value_by_name_const(trace, "hostname");
+
+    /* Get domain */
+    const bt_value *domain_value = bt_trace_borrow_environment_entry_value_by_name_const(trace, "domain");
+	
+    /* Get the context (aka stream packet context) field members */
+    const bt_packet *packet = bt_event_borrow_packet_const(event);
+    const bt_field *context_field = bt_packet_borrow_context_field_const(packet);
+    
+    /* Get the common context (aka stream event context) field members */
+    const bt_field *common_context_field = bt_event_borrow_common_context_field_const(event);
+    
+    /* Get the specific context (aka event context) field members */
+    const bt_field *specific_context_field = bt_event_borrow_specific_context_field_const(event);
+    
     /* Get the payload field members */
     const bt_field *payload_field = bt_event_borrow_payload_field_const(event);
-    uint64_t member_count = bt_field_class_structure_get_member_count(bt_field_borrow_class_const(payload_field));
- 
-    /* Write a corresponding line to the standard output */
-    printf("#%" PRIu64 ": %s (%" PRIu64 " payload member%s)\n",
-        qianhui_out->index, bt_event_class_get_name(event_class),
-        member_count, member_count == 1 ? "" : "s");
-        
-    // Qianhui: 02/12/2020 Begin
-    /* Extract payload field to self-defined field structure. */
-    // TODO
-    // Qianhui: 02/12/2020 End
-    // Qianhui: 02/12/2020 Begin
-    /* Print payload field. */
-    print_field(payload_field, NULL);
-    printf("\n");
-    // Qianhui: 02/12/2020 End
+    
+    //printf("#%" PRIu64 ": ", qianhui_out->index);
+    printf("{ ");
 
+    /* Print timestamp (ns from origin) */
+    printf("\"timestamp\":");
+    print_timestamp(clock_snapshot);
+
+    /* Print hostname */
+    const char *hostname_str = bt_value_string_get(hostname_value);
+    printf(", \"hostname\":\"%s\"", hostname_str);
+
+    /* Print domain */
+    const char *domain_str = bt_value_string_get(domain_value);
+    printf(", \"domain\":\"%s\"", domain_str);
+
+    /* Print event name */
+    printf(", \"event_name\":\"%s\"", bt_event_class_get_name(event_class));
+    
+    /* Print context field. */
+    if (context_field) {
+        printf(", \"context\":");
+        print_field(context_field, NULL);
+    }
+    /* Print common context field. */
+    if (common_context_field) {
+        printf(", \"common_context\":");
+        print_field(common_context_field, NULL);
+    }
+    /* Print specific context field. */
+    if (specific_context_field) {
+        printf(", \"specific_context\":");
+        print_field(specific_context_field, NULL);
+    }
+    /* Print payload field. */
+    if (payload_field) {
+        printf(", \"payload\":");
+        print_field(payload_field, NULL);
+    }
+    printf(" }\n");
  
     /* Increment the current event message's index */
     qianhui_out->index++;
