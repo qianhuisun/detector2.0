@@ -6,7 +6,6 @@
 #include <babeltrace2/babeltrace.h>
 // Qianhui: 02/12/2020 Begin
 #include <stdbool.h>
-
 // Qianhui: 02/12/2020 End
 
  
@@ -21,9 +20,6 @@ struct qianhui_out {
 
 // Qianhui: 02/12/2020 Begin
 /* Define customed field structure for Payload, Context, etc. */
-struct qianhui_field {
-    
-};
 // Qianhui: 02/12/2020 End
 
 
@@ -36,7 +32,6 @@ void format_uint(char *buf, uint64_t value, unsigned int base)
     char *buf_start = buf;
     unsigned int digits_per_group = 3;
     char sep = ',';
-    bool sep_digits = true;
 
     switch (base) {
     case 2:
@@ -55,24 +50,12 @@ void format_uint(char *buf, uint64_t value, unsigned int base)
         sep = ':';
         break;
     case 10:
-        if (value <= 9999) {
-            /*
-             * Do not insert digit separators for numbers
-             * under 10,000 as it looks weird.
-             */
-            sep_digits = false;
-        }
-
         break;
     default:
-        bt_common_abort();
+        break;
     }
 
     sprintf(buf_start, spec, value);
-
-    if (sep_digits) {
-        bt_common_sep_digits(buf_start, digits_per_group, sep);
-    }
 }
 
 static inline
@@ -82,7 +65,6 @@ void format_int(char *buf, int64_t value, unsigned int base)
     char *buf_start = buf;
     unsigned int digits_per_group = 3;
     char sep = ',';
-    bool sep_digits = true;
     uint64_t abs_value = value < 0 ? (uint64_t) -value : (uint64_t) value;
 
     if (value < 0) {
@@ -107,25 +89,12 @@ void format_int(char *buf, int64_t value, unsigned int base)
         sep = ':';
         break;
     case 10:
-        if (value >= -9999 && value <= 9999) {
-            /*
-             * Do not insert digit separators for numbers
-             * over -10,000 and under 10,000 as it looks
-             * weird.
-             */
-            sep_digits = false;
-        }
-
         break;
     default:
-        bt_common_abort();
+        break;
     }
 
     sprintf(buf_start, spec, abs_value);
-
-    if (sep_digits) {
-        bt_common_sep_digits(buf_start, digits_per_group, sep);
-    }
 }
 // Qianhui: 02/12/2020 End
 
@@ -226,7 +195,7 @@ void print_field(const bt_field *field, const char *name) {
     } else if (field_class_type == BT_FIELD_CLASS_TYPE_BIT_ARRAY) {
         format_uint(buf, bt_field_bit_array_get_value_as_integer(field), 16);
         printf("%s", buf);
-    } else if (field_class_type == BT_FIELD_CLASS_TYPE_INTEGER) {
+    } else if (bt_field_class_type_is(field_class_type, BT_FIELD_CLASS_TYPE_INTEGER)) {
         field_class = bt_field_borrow_class_const(field);
         bt_field_class_integer_preferred_display_base base = bt_field_class_integer_get_preferred_display_base(field_class);
         unsigned int fmt_base;
@@ -244,9 +213,9 @@ void print_field(const bt_field *field, const char *name) {
             fmt_base = 16;
             break;
         default:
-            bt_common_abort();
+            return;
         }
-        if (field_class_type == BT_FIELD_CLASS_TYPE_UNSIGNED_INTEGER) {
+        if (bt_field_class_type_is(field_class_type, BT_FIELD_CLASS_TYPE_UNSIGNED_INTEGER)) {
             format_uint(buf, bt_field_integer_unsigned_get_value(field), fmt_base);
             printf("%s", buf);
         } else {
@@ -258,7 +227,7 @@ void print_field(const bt_field *field, const char *name) {
     } else if (field_class_type == BT_FIELD_CLASS_TYPE_DOUBLE_PRECISION_REAL) {
         printf("%f", (double) bt_field_real_double_precision_get_value(field));
     } else if (field_class_type == BT_FIELD_CLASS_TYPE_STRING) {
-        printf("%s", bt_field_string_get_value(field));
+        printf("\"%s\"", bt_field_string_get_value(field));
     } else if (field_class_type == BT_FIELD_CLASS_TYPE_STRUCTURE) {
         field_class = bt_field_borrow_class_const(field);
         uint64_t member_count = bt_field_class_structure_get_member_count(field_class);
@@ -270,10 +239,13 @@ void print_field(const bt_field *field, const char *name) {
             const bt_field *member_field =
                 bt_field_structure_borrow_member_field_by_index_const(field, i);
             print_field(member_field, bt_field_class_structure_member_get_name(field_class_structure_member));
+            if (i < member_count - 1) {
+                printf(", ");
+            }
         }
         /* Print JSON object right brace */
         printf(" }");
-    } else if (field_class_type == BT_FIELD_CLASS_TYPE_ARRAY) {
+    } else if (bt_field_class_type_is(field_class_type, BT_FIELD_CLASS_TYPE_ARRAY)) {
         uint64_t element_count = bt_field_array_get_length(field);
         /* Print JSON array left bracket */
         printf("[ ");
@@ -281,23 +253,23 @@ void print_field(const bt_field *field, const char *name) {
             const bt_field *element_field = 
                 bt_field_array_borrow_element_field_by_index_const(field, i);
             print_field(element_field, NULL);
+            if (i < element_count - 1) {
+                printf(", ");
+            }
         }
         /* Print JSON array right bracket */
         printf(" ]");
-    } else if (field_class_type == BT_FIELD_CLASS_TYPE_OPTION) {
+    } else if (bt_field_class_type_is(field_class_type, BT_FIELD_CLASS_TYPE_OPTION)) {
         const bt_field *option_field =
             bt_field_option_borrow_field_const(field);
         if (option_field) {
             print_field(option_field, NULL);
         }
-    } else if (field_class_type == BT_FIELD_CLASS_TYPE_VARIANT) {
+    } else if (bt_field_class_type_is(field_class_type, BT_FIELD_CLASS_TYPE_VARIANT)) {
         const bt_field *variant_field =
             bt_field_variant_borrow_selected_option_field_const(field);
         print_field(variant_field, NULL);
-    } else {
-        bt_common_abort();
-    }
-    
+    } 
 }
 // Qianhui: 02/12/2020 End
 
