@@ -1,0 +1,21 @@
+In babeltrace2.c:
+    In int main(int argc, const char **argv):
+        // 解析参数
+        cfg = bt_config_cli_args_create_with_default(argc, argv, &retcode, the_interrupter);
+        // 执行解析
+        cmd_status = cmd_run(cfg);
+    
+// 解析参数调用链
+bt_config_cli_args_create_with_default() -> bt_config_cli_args_create() -> bt_config_convert_from_args()
+// 执行解析调用链
+cmd_run() -> bt_graph_run() -> consume_no_check() -> consume_sink_node() -> consume_graph_sink()
+
+
+拟定步骤:
+1. 编译custom plugin component:
+    e.g. $ cc comp.c -fPIC -c $(pkg-config --cflags babeltrace2)
+         $ ld comp.o -o comp.so -shared $(pkg-config --libs babeltrace2)
+2. 调用main() 参照cmd line 传参:
+    e.g. $ babeltrace2 --plugin-path=/path/to/plugin /path/to/ctf/trace --component=sink.customobject.callback
+3. sink.customobject.callback 模块每处理一条bt_message 得到一个event object, 调用一次回调函数:
+    e.g. parse_message_to_object() -> handle_event_object(struct custom_event_structure *event_object)
