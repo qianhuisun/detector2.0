@@ -320,7 +320,7 @@ void print_message(struct object_out *object_out, const bt_message *message)
 
     /* Print hostname */
     const char *hostname_str = bt_value_string_get(hostname_value);
-    printf(", \"hostname\":\"%s\"", hostname_str);
+    printf(", \"host_name\":\"%s\"", hostname_str);
 
     /* Print domain */
     const char *domain_str = bt_value_string_get(domain_value);

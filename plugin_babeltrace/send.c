@@ -6,6 +6,12 @@
 #include <babeltrace2/babeltrace.h>
 #include <stdbool.h>
 
+struct custom_event{
+    char timestamp[32];
+    char host_name[32];
+    char domain[32];
+    char event_name[32];
+};
  
 /* Sink component's private data */
 struct object_send {
@@ -192,27 +198,39 @@ void send_message(struct object_send *object_send, const bt_message *message)
 
     /* Get domain */
     const bt_value *domain_value = bt_trace_borrow_environment_entry_value_by_name_const(trace, "domain");
-    
-    //printf("#%" PRIu64 ": ", object_send->index);
-    printf("{ ");
+
+    struct custom_event custom_event_object;
+
+    /* Get timestamp */
+    int64_t ns_from_origin;
+    bt_clock_snapshot_get_ns_from_origin_status cs_status = bt_clock_snapshot_get_ns_from_origin(clock_snapshot, &ns_from_origin);
+    if (cs_status == BT_CLOCK_SNAPSHOT_GET_NS_FROM_ORIGIN_STATUS_OK) {
+        format_int(custom_event_object.timestamp, ns_from_origin, 10);
+    }
+
+    /* Get host name */
+    strncpy(custom_event_object.host_name, bt_value_string_get(hostname_value), sizeof(custom_event_object.host_name));
+
+    /* Get domain */
+    strncpy(custom_event_object.domain, bt_value_string_get(domain_value), sizeof(custom_event_object.domain));
+
+    /* Get event name */
+    strncpy(custom_event_object.event_name, bt_event_class_get_name(event_class), sizeof(custom_event_object.event_name));
 
     /* Print timestamp (ns from origin) */
-    printf("\"timestamp\":");
-    send_timestamp(clock_snapshot);
+    printf(", \"timestamp\":\"%s\"", custom_event_object.timestamp);
 
     /* Print hostname */
-    const char *hostname_str = bt_value_string_get(hostname_value);
-    printf(", \"hostname\":\"%s\"", hostname_str);
+    printf(", \"host_name\":\"%s\"", custom_event_object.host_name);
 
     /* Print domain */
-    const char *domain_str = bt_value_string_get(domain_value);
-    printf(", \"domain\":\"%s\"", domain_str);
+    printf(", \"domain\":\"%s\"", custom_event_object.domain);
 
     /* Print event name */
-    printf(", \"event_name\":\"%s\"", bt_event_class_get_name(event_class));
-    
-    printf(" }\n");
- 
+    printf(", \"event_name\":\"%s\"", custom_event_object.event_name);
+
+    printf("\n");
+
     /* Increment the current event message's index */
     object_send->index++;
  
