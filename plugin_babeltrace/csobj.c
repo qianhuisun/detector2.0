@@ -13,15 +13,16 @@
 #include <errno.h>
 #include <arpa/inet.h>
 
-struct custom_event{
+typedef struct custom_event{
+    bool last_event;
     char timestamp[32];
     char host_name[32];
     char domain[32];
     char event_name[32];
-};
+} custom_event;
  
 /* Sink component's private data */
-struct object_feed {
+struct object_out {
     /* Upstream message iterator (owned by this) */
     bt_message_iterator *message_iterator;
  
@@ -30,6 +31,7 @@ struct object_feed {
 
     int sockfd;
 };
+
 
 /* Copied from write.c in sink.text.details component */
 static inline
@@ -94,25 +96,26 @@ void format_int(char *buf, int64_t value, unsigned int base)
     sprintf(buf_start, spec, abs_value);
 }
 
+ 
 /*
  * Initializes the sink component.
  */
 static
-bt_component_class_initialize_method_status object_feed_initialize(
+bt_component_class_initialize_method_status object_csobj_initialize(
         bt_self_component_sink *self_component_sink,
         bt_self_component_sink_configuration *configuration,
         const bt_value *params, void *initialize_method_data)
 {
     /* Allocate a private data structure */
-    struct object_feed *object_feed = malloc(sizeof(*object_feed));
+    struct object_out *object_out = malloc(sizeof(*object_out));
  
     /* Initialize the first event message's index */
-    object_feed->index = 1;
+    object_out->index = 1;
  
     /* Set the component's user data to our private data structure */
     bt_self_component_set_data(
         bt_self_component_sink_as_self_component(self_component_sink),
-        object_feed);
+        object_out);
  
     /*
      * Add an input port named `in` to the sink component.
@@ -128,7 +131,7 @@ bt_component_class_initialize_method_status object_feed_initialize(
     /*  Initialize the client socket */
     struct sockaddr_in server_addr;
     memset(&server_addr, '0', sizeof(server_addr));
-    if((object_feed->sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+    if((object_out->sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
     {
         printf("\n Error : Could not create socket \n");
         return 1;
@@ -140,13 +143,11 @@ bt_component_class_initialize_method_status object_feed_initialize(
         printf("\n inet_pton error occured\n");
         return 1;
     }
-    if(connect(object_feed->sockfd, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0)
+    if(connect(object_out->sockfd, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0)
     {
         printf("\n Error: Connect Failed \n");
         return 1;
     }
-    int tmp = htonl(10);
-    send(object_feed->sockfd, &tmp, sizeof(tmp), 0);
  
     return BT_COMPONENT_CLASS_INITIALIZE_METHOD_STATUS_OK;
 }
@@ -155,14 +156,18 @@ bt_component_class_initialize_method_status object_feed_initialize(
  * Finalizes the sink component.
  */
 static
-void object_feed_finalize(bt_self_component_sink *self_component_sink)
+void object_csobj_finalize(bt_self_component_sink *self_component_sink)
 {
     /* Retrieve our private data from the component's user data */
-    struct object_feed *object_feed = bt_self_component_get_data(
+    struct object_out *object_out = bt_self_component_get_data(
         bt_self_component_sink_as_self_component(self_component_sink));
  
     /* Free the allocated structure */
-    free(object_feed);
+    free(object_out);
+
+    custom_event *custom_event_object = (custom_event*) malloc (sizeof(custom_event));
+    custom_event_object->last_event = true;
+    send(object_out->sockfd, custom_event_object, sizeof(custom_event), 0);
 }
  
 /*
@@ -173,10 +178,10 @@ void object_feed_finalize(bt_self_component_sink *self_component_sink)
  */
 static
 bt_component_class_sink_graph_is_configured_method_status
-object_feed_graph_is_configured(bt_self_component_sink *self_component_sink)
+object_csobj_graph_is_configured(bt_self_component_sink *self_component_sink)
 {
     /* Retrieve our private data from the component's user data */
-    struct object_feed *object_feed = bt_self_component_get_data(
+    struct object_out *object_out = bt_self_component_get_data(
         bt_self_component_sink_as_self_component(self_component_sink));
  
     /* Borrow our unique port */
@@ -186,17 +191,17 @@ object_feed_graph_is_configured(bt_self_component_sink *self_component_sink)
  
     /* Create the uptream message iterator */
     bt_message_iterator_create_from_sink_component(self_component_sink,
-        in_port, &object_feed->message_iterator);
+        in_port, &object_out->message_iterator);
  
     return BT_COMPONENT_CLASS_SINK_GRAPH_IS_CONFIGURED_METHOD_STATUS_OK;
 }
-
+ 
 /*
  * Prints a line for `message`, if it's an event message, to the
- * standard feed.
+ * standard csobj.
  */
 static
-void feed_message(struct object_feed *object_feed, const bt_message *message)
+void print_message(struct object_out *object_out, const bt_message *message)
 {
     /* Discard if it's not an event message */
     if (bt_message_get_type(message) != BT_MESSAGE_TYPE_EVENT) {
@@ -217,44 +222,48 @@ void feed_message(struct object_feed *object_feed, const bt_message *message)
 
     /* Get domain */
     const bt_value *domain_value = bt_trace_borrow_environment_entry_value_by_name_const(trace, "domain");
-
-    struct custom_event custom_event_object;
+	
+    custom_event *custom_event_object = (custom_event*) malloc (sizeof(custom_event));
+    custom_event_object->last_event = false;
 
     /* Get timestamp */
     int64_t ns_from_origin;
     bt_clock_snapshot_get_ns_from_origin_status cs_status = bt_clock_snapshot_get_ns_from_origin(clock_snapshot, &ns_from_origin);
     if (cs_status == BT_CLOCK_SNAPSHOT_GET_NS_FROM_ORIGIN_STATUS_OK) {
-        format_int(custom_event_object.timestamp, ns_from_origin, 10);
+        format_int(custom_event_object->timestamp, ns_from_origin, 10);
     }
 
     /* Get host name */
-    strncpy(custom_event_object.host_name, bt_value_string_get(hostname_value), sizeof(custom_event_object.host_name));
+    strncpy(custom_event_object->host_name, bt_value_string_get(hostname_value), sizeof(custom_event_object->host_name));
 
     /* Get domain */
-    strncpy(custom_event_object.domain, bt_value_string_get(domain_value), sizeof(custom_event_object.domain));
+    strncpy(custom_event_object->domain, bt_value_string_get(domain_value), sizeof(custom_event_object->domain));
 
     /* Get event name */
-    strncpy(custom_event_object.event_name, bt_event_class_get_name(event_class), sizeof(custom_event_object.event_name));
+    strncpy(custom_event_object->event_name, bt_event_class_get_name(event_class), sizeof(custom_event_object->event_name));
 
     /* Send object */
-    send(object_feed->sockfd, &custom_event_object, sizeof(&custom_event_object), 0);
+    send(object_out->sockfd, custom_event_object, sizeof(custom_event), 0);
+
+    /* Print index */
+    printf("#%" PRIu64, object_out->index);
 
     /* Print timestamp (ns from origin) */
-    printf(", \"timestamp\":\"%s\"", custom_event_object.timestamp);
+    //printf(", \"timestamp\":\"%s\"", custom_event_object->timestamp);
 
     /* Print hostname */
-    printf(", \"host_name\":\"%s\"", custom_event_object.host_name);
+    //printf(", \"host_name\":\"%s\"", custom_event_object->host_name);
 
     /* Print domain */
-    printf(", \"domain\":\"%s\"", custom_event_object.domain);
+    //printf(", \"domain\":\"%s\"", custom_event_object->domain);
 
     /* Print event name */
-    printf(", \"event_name\":\"%s\"", custom_event_object.event_name);
+    printf(", \"event_name\":\"%s\"", custom_event_object->event_name);
 
     printf("\n");
-
+ 
     /* Increment the current event message's index */
-    object_feed->index++;
+    object_out->index++;
  
 end:
     return;
@@ -262,29 +271,29 @@ end:
  
 /*
  * Consumes a batch of messages and writes the corresponding lines to
- * the standard feed.
+ * the standard csobj.
  */
-bt_component_class_sink_consume_method_status object_feed_consume(
+bt_component_class_sink_consume_method_status object_csobj_consume(
         bt_self_component_sink *self_component_sink)
 {
     bt_component_class_sink_consume_method_status status =
         BT_COMPONENT_CLASS_SINK_CONSUME_METHOD_STATUS_OK;
  
     /* Retrieve our private data from the component's user data */
-    struct object_feed *object_feed = bt_self_component_get_data(
+    struct object_out *object_out = bt_self_component_get_data(
         bt_self_component_sink_as_self_component(self_component_sink));
  
     /* Consume a batch of messages from the upstream message iterator */
     bt_message_array_const messages;
     uint64_t message_count;
     bt_message_iterator_next_status next_status =
-        bt_message_iterator_next(object_feed->message_iterator, &messages,
+        bt_message_iterator_next(object_out->message_iterator, &messages,
             &message_count);
  
     switch (next_status) {
     case BT_MESSAGE_ITERATOR_NEXT_STATUS_END:
         /* End of iteration: put the message iterator's reference */
-        bt_message_iterator_put_ref(object_feed->message_iterator);
+        bt_message_iterator_put_ref(object_out->message_iterator);
         status = BT_COMPONENT_CLASS_SINK_CONSUME_METHOD_STATUS_END;
         goto end;
     case BT_MESSAGE_ITERATOR_NEXT_STATUS_AGAIN:
@@ -306,7 +315,7 @@ bt_component_class_sink_consume_method_status object_feed_consume(
         const bt_message *message = messages[i];
  
         /* Print line for current message if it's an event message */
-        feed_message(object_feed, message);
+        print_message(object_out, message);
  
         /* Put this message's reference */
         bt_message_put_ref(message);
@@ -322,12 +331,12 @@ BT_PLUGIN_MODULE();
 /* Define the `object` plugin */
 BT_PLUGIN(object);
  
-/* Define the `feed` sink component class */
-BT_PLUGIN_SINK_COMPONENT_CLASS(feed, object_feed_consume);
+/* Define the `csobj` sink component class */
+BT_PLUGIN_SINK_COMPONENT_CLASS(csobj, object_csobj_consume);
  
-/* Set some of the `feed` sink component class's optional methods */
-BT_PLUGIN_SINK_COMPONENT_CLASS_INITIALIZE_METHOD(feed,
-    object_feed_initialize);
-BT_PLUGIN_SINK_COMPONENT_CLASS_FINALIZE_METHOD(feed, object_feed_finalize);
-BT_PLUGIN_SINK_COMPONENT_CLASS_GRAPH_IS_CONFIGURED_METHOD(feed,
-    object_feed_graph_is_configured);
+/* Set some of the `csobj` sink component class's optional methods */
+BT_PLUGIN_SINK_COMPONENT_CLASS_INITIALIZE_METHOD(csobj,
+    object_csobj_initialize);
+BT_PLUGIN_SINK_COMPONENT_CLASS_FINALIZE_METHOD(csobj, object_csobj_finalize);
+BT_PLUGIN_SINK_COMPONENT_CLASS_GRAPH_IS_CONFIGURED_METHOD(csobj,
+    object_csobj_graph_is_configured);
