@@ -13,14 +13,54 @@
 #include <errno.h>
 #include <arpa/inet.h>
 
+typedef struct sched_switch{
+	char prev_comm[32];
+	int64_t prev_tid;
+	int64_t prev_prio;
+	int64_t prev_state;
+	char next_comm[32];
+	int64_t next_tid;
+	int64_t next_prio;
+} sched_switch;
+
+typedef struct syscall_entry_read{
+	uint64_t fd;
+	uint64_t count;
+} syscall_entry_read;
+
+typedef struct syscall_exit_read{
+	int64_t ret;
+	uint64_t buf;
+} syscall_exit_read;
+
+
+typedef struct syscall_entry_write{
+	uint64_t fd;
+	uint64_t buf;
+	uint64_t count;
+} syscall_entry_write;
+
+typedef struct syscall_exit_write{
+	int64_t ret;
+} syscall_exit_write;
+
 typedef struct custom_event{
     bool last_event;
     char timestamp[32];
-    char host_name[32];
+    char hostname[32];
     char domain[32];
     char event_name[32];
+    uint64_t cpu_id;
+    int64_t pid;
+    union {
+		sched_switch _sched_switch;
+		syscall_entry_read _syscall_entry_read;
+		syscall_exit_read _syscall_exit_read;
+		syscall_entry_write _syscall_entry_write;
+		syscall_exit_write _syscall_exit_write;
+    } Payload;
 } custom_event;
- 
+
 /* Sink component's private data */
 struct object_out {
     /* Upstream message iterator (owned by this) */
@@ -31,7 +71,6 @@ struct object_out {
 
     int sockfd;
 };
-
 
 /* Copied from write.c in sink.text.details component */
 static inline
@@ -137,7 +176,7 @@ bt_component_class_initialize_method_status object_csobj_initialize(
         return 1;
     }
     server_addr.sin_family = AF_INET;
-    server_addr.sin_port = htons(5000);
+    server_addr.sin_port = htons(5022);
     if(inet_pton(AF_INET, "127.0.0.1", &server_addr.sin_addr)<=0)
     {
         printf("\n inet_pton error occured\n");
@@ -195,7 +234,94 @@ object_csobj_graph_is_configured(bt_self_component_sink *self_component_sink)
  
     return BT_COMPONENT_CLASS_SINK_GRAPH_IS_CONFIGURED_METHOD_STATUS_OK;
 }
- 
+
+static
+uint64_t get_uint64_value_from_field(const char *target_name, const bt_field *field, const char *name) {
+    bt_field_class_type field_class_type = bt_field_get_class_type(field);
+    const bt_field_class *field_class;
+    if (bt_field_class_type_is(field_class_type, BT_FIELD_CLASS_TYPE_UNSIGNED_INTEGER)) {
+        if (strcmp(target_name, name) == 0) {
+            return bt_field_integer_unsigned_get_value(field);
+        }
+    } else if (field_class_type == BT_FIELD_CLASS_TYPE_STRUCTURE) {
+        field_class = bt_field_borrow_class_const(field);
+        uint64_t member_count = bt_field_class_structure_get_member_count(field_class);
+        for (int i = 0; i < member_count; ++i) {
+            const bt_field_class_structure_member *field_class_structure_member =
+                bt_field_class_structure_borrow_member_by_index_const(field_class, i);
+            const bt_field *member_field =
+                bt_field_structure_borrow_member_field_by_index_const(field, i);
+            const char *member_name = bt_field_class_structure_member_get_name(field_class_structure_member);
+            if (strcmp(target_name, member_name) == 0) {
+                return get_uint64_value_from_field(target_name, member_field, member_name);
+            }
+        }
+        /* Error code 999999: target_name not in the structure */
+        return 999999;
+    } else {
+        /* Error code 888888: field is not a structure */
+        return 888888;
+    }
+}
+
+static
+int64_t get_int64_value_from_field(const char *target_name, const bt_field *field, const char *name) {
+    bt_field_class_type field_class_type = bt_field_get_class_type(field);
+    const bt_field_class *field_class;
+    if (bt_field_class_type_is(field_class_type, BT_FIELD_CLASS_TYPE_SIGNED_INTEGER)) {
+        if (strcmp(target_name, name) == 0) {
+            return bt_field_integer_signed_get_value(field);
+        }
+    } else if (field_class_type == BT_FIELD_CLASS_TYPE_STRUCTURE) {
+        field_class = bt_field_borrow_class_const(field);
+        uint64_t member_count = bt_field_class_structure_get_member_count(field_class);
+        for (int i = 0; i < member_count; ++i) {
+            const bt_field_class_structure_member *field_class_structure_member =
+                bt_field_class_structure_borrow_member_by_index_const(field_class, i);
+            const bt_field *member_field =
+                bt_field_structure_borrow_member_field_by_index_const(field, i);
+            const char *member_name = bt_field_class_structure_member_get_name(field_class_structure_member);
+            if (strcmp(target_name, member_name) == 0) {
+                return get_int64_value_from_field(target_name, member_field, member_name);
+            }
+        }
+        /* Error code 999999: target_name not in the structure */
+        return 999999;
+    } else {
+        /* Error code 888888: field is not a structure */
+        return 888888;
+    }
+}
+
+static
+const char *get_string_value_from_field(const char *target_name, const bt_field *field, const char *name) {
+    bt_field_class_type field_class_type = bt_field_get_class_type(field);
+    const bt_field_class *field_class;
+    if (field_class_type == BT_FIELD_CLASS_TYPE_STRING) {
+        if (strcmp(target_name, name) == 0) {
+            return bt_field_string_get_value(field);
+        }
+    } else if (field_class_type == BT_FIELD_CLASS_TYPE_STRUCTURE) {
+        field_class = bt_field_borrow_class_const(field);
+        uint64_t member_count = bt_field_class_structure_get_member_count(field_class);
+        for (int i = 0; i < member_count; ++i) {
+            const bt_field_class_structure_member *field_class_structure_member =
+                bt_field_class_structure_borrow_member_by_index_const(field_class, i);
+            const bt_field *member_field =
+                bt_field_structure_borrow_member_field_by_index_const(field, i);
+            const char *member_name = bt_field_class_structure_member_get_name(field_class_structure_member);
+            if (strcmp(target_name, member_name) == 0) {
+                return get_string_value_from_field(target_name, member_field, member_name);
+            }
+        }
+        /* Error code 999999: target_name not in the structure */
+        return "999999";
+    } else {
+        /* Error code 888888: field is not a structure */
+        return "888888";
+    }
+}
+
 /*
  * Prints a line for `message`, if it's an event message, to the
  * standard csobj.
@@ -212,17 +338,28 @@ void print_message(struct object_out *object_out, const bt_message *message)
     const bt_event *event = bt_message_event_borrow_event_const(message);
     const bt_event_class *event_class = bt_event_borrow_class_const(event);
     
-    /* Get timestamp */
+    /* Prepare timestamp */
     const bt_clock_snapshot *clock_snapshot = bt_message_event_borrow_default_clock_snapshot_const(message);
 
-    /* Get hostname */
+    /* Prepare hostname */
 	const bt_stream *stream = bt_event_borrow_stream_const(event);
 	const bt_trace *trace = bt_stream_borrow_trace_const(stream);
     const bt_value *hostname_value = bt_trace_borrow_environment_entry_value_by_name_const(trace, "hostname");
 
-    /* Get domain */
+    /* Prepare domain */
     const bt_value *domain_value = bt_trace_borrow_environment_entry_value_by_name_const(trace, "domain");
 	
+    /* Prepare the context (aka stream packet context) field members */
+    const bt_packet *packet = bt_event_borrow_packet_const(event);
+    const bt_field *context_field = bt_packet_borrow_context_field_const(packet);
+    
+    /* Prepare the common context (aka stream event context) field members */
+    const bt_field *common_context_field = bt_event_borrow_common_context_field_const(event);
+    
+    /* Prepare the payload field members */
+    const bt_field *payload_field = bt_event_borrow_payload_field_const(event);
+    
+    /* Create event object to send */
     custom_event *custom_event_object = (custom_event*) malloc (sizeof(custom_event));
     custom_event_object->last_event = false;
 
@@ -233,14 +370,43 @@ void print_message(struct object_out *object_out, const bt_message *message)
         format_int(custom_event_object->timestamp, ns_from_origin, 10);
     }
 
-    /* Get host name */
-    strncpy(custom_event_object->host_name, bt_value_string_get(hostname_value), sizeof(custom_event_object->host_name));
+    /* Get hostname */
+    strncpy(custom_event_object->hostname, bt_value_string_get(hostname_value), sizeof(custom_event_object->hostname));
 
     /* Get domain */
     strncpy(custom_event_object->domain, bt_value_string_get(domain_value), sizeof(custom_event_object->domain));
 
     /* Get event name */
     strncpy(custom_event_object->event_name, bt_event_class_get_name(event_class), sizeof(custom_event_object->event_name));
+
+    /* Get cpu id */
+    custom_event_object->cpu_id = get_uint64_value_from_field("cpu_id", context_field, NULL);
+    
+    /* Get pid */
+    custom_event_object->pid = get_int64_value_from_field("pid", common_context_field, NULL);
+
+    /* Get payload */
+    if (strcmp(custom_event_object->event_name, "sched_switch") == 0) {
+        strncpy(custom_event_object->Payload._sched_switch.prev_comm, get_string_value_from_field("prev_comm", payload_field, NULL), sizeof(custom_event_object->Payload._sched_switch.prev_comm));
+        custom_event_object->Payload._sched_switch.prev_tid = get_int64_value_from_field("prev_tid", payload_field, NULL);
+        custom_event_object->Payload._sched_switch.prev_prio = get_int64_value_from_field("prev_prio", payload_field, NULL);
+        custom_event_object->Payload._sched_switch.prev_state = get_int64_value_from_field("prev_state", payload_field, NULL);
+        strncpy(custom_event_object->Payload._sched_switch.next_comm, get_string_value_from_field("next_comm", payload_field, NULL), sizeof(custom_event_object->Payload._sched_switch.next_comm));
+        custom_event_object->Payload._sched_switch.next_tid = get_int64_value_from_field("next_tid", payload_field, NULL);
+        custom_event_object->Payload._sched_switch.next_prio = get_int64_value_from_field("next_prio", payload_field, NULL);
+    } else if (strcmp(custom_event_object->event_name, "syscall_entry_read") == 0) {
+        custom_event_object->Payload._syscall_entry_read.fd = get_uint64_value_from_field("fd", payload_field, NULL);
+        custom_event_object->Payload._syscall_entry_read.count = get_uint64_value_from_field("count", payload_field, NULL);
+    } else if (strcmp(custom_event_object->event_name, "syscall_exit_read") == 0) {
+        custom_event_object->Payload._syscall_exit_read.ret = get_int64_value_from_field("ret", payload_field, NULL);
+        custom_event_object->Payload._syscall_exit_read.buf = get_uint64_value_from_field("buf", payload_field, NULL);
+    } else if (strcmp(custom_event_object->event_name, "syscall_entry_write") == 0) {
+        custom_event_object->Payload._syscall_entry_write.fd = get_uint64_value_from_field("fd", payload_field, NULL);
+        custom_event_object->Payload._syscall_entry_write.buf = get_uint64_value_from_field("buf", payload_field, NULL);
+        custom_event_object->Payload._syscall_entry_write.count = get_uint64_value_from_field("count", payload_field, NULL);
+    } else if (strcmp(custom_event_object->event_name, "syscall_exit_write") == 0) {
+        custom_event_object->Payload._syscall_exit_write.ret = get_int64_value_from_field("ret", payload_field, NULL);
+    }
 
     /* Send object */
     send(object_out->sockfd, custom_event_object, sizeof(custom_event), 0);
@@ -252,13 +418,13 @@ void print_message(struct object_out *object_out, const bt_message *message)
     //printf(", \"timestamp\":\"%s\"", custom_event_object->timestamp);
 
     /* Print hostname */
-    //printf(", \"host_name\":\"%s\"", custom_event_object->host_name);
+    //printf(", \"hostname\":\"%s\"", custom_event_object->hostname);
 
     /* Print domain */
     //printf(", \"domain\":\"%s\"", custom_event_object->domain);
 
     /* Print event name */
-    printf(", \"event_name\":\"%s\"", custom_event_object->event_name);
+    //printf(", \"event_name\":\"%s\"", custom_event_object->event_name);
 
     printf("\n");
  
