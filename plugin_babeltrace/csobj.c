@@ -13,37 +13,6 @@
 #include <errno.h>
 #include <arpa/inet.h>
 
-typedef struct sched_switch{
-	char prev_comm[32];
-	int64_t prev_tid;
-	int64_t prev_prio;
-	int64_t prev_state;
-	char next_comm[32];
-	int64_t next_tid;
-	int64_t next_prio;
-} sched_switch;
-
-typedef struct syscall_entry_read{
-	uint64_t fd;
-	uint64_t count;
-} syscall_entry_read;
-
-typedef struct syscall_exit_read{
-	int64_t ret;
-	uint64_t buf;
-} syscall_exit_read;
-
-
-typedef struct syscall_entry_write{
-	uint64_t fd;
-	uint64_t buf;
-	uint64_t count;
-} syscall_entry_write;
-
-typedef struct syscall_exit_write{
-	int64_t ret;
-} syscall_exit_write;
-
 typedef struct custom_event{
     bool last_event;
     char timestamp[32];
@@ -51,14 +20,9 @@ typedef struct custom_event{
     char domain[32];
     char event_name[32];
     uint64_t cpu_id;
-    int64_t pid;
-    union {
-		sched_switch _sched_switch;
-		syscall_entry_read _syscall_entry_read;
-		syscall_exit_read _syscall_exit_read;
-		syscall_entry_write _syscall_entry_write;
-		syscall_exit_write _syscall_exit_write;
-    } Payload;
+    int64_t tid;
+    uint64_t payload_size;
+    int64_t payloads[];
 } custom_event;
 
 /* Sink component's private data */
@@ -360,7 +324,14 @@ void print_message(struct object_out *object_out, const bt_message *message)
     const bt_field *payload_field = bt_event_borrow_payload_field_const(event);
     
     /* Create event object to send */
-    custom_event *custom_event_object = (custom_event*) malloc (sizeof(custom_event));
+    uint64_t payload_num, payload_string_size;
+    get_payload_num_and_string_size(payload_field, &payload_num, &payload_string_size);
+    uint64_t event_size = sizeof(custom_event) + payload_num * sizeof(int64_t) + payload_string_size;
+    uint64_t payload_string_offset = sizeof(custom_event) + payload_num * sizeof(int64_t);
+    custom_event *custom_event_object = (custom_event*) malloc (event_size);
+    for (uint64_t i = 0; i < payload_num; ++i) {
+        fill_payload_param_by_index(custom_event_object, payload_field, i, payload_string_offset);
+    }
     custom_event_object->last_event = false;
 
     /* Get timestamp */
@@ -382,34 +353,11 @@ void print_message(struct object_out *object_out, const bt_message *message)
     /* Get cpu id */
     custom_event_object->cpu_id = get_uint64_value_from_field("cpu_id", context_field, NULL);
     
-    /* Get pid */
-    custom_event_object->pid = get_int64_value_from_field("pid", common_context_field, NULL);
-
-    /* Get payload */
-    if (strcmp(custom_event_object->event_name, "sched_switch") == 0) {
-        strncpy(custom_event_object->Payload._sched_switch.prev_comm, get_string_value_from_field("prev_comm", payload_field, NULL), sizeof(custom_event_object->Payload._sched_switch.prev_comm));
-        custom_event_object->Payload._sched_switch.prev_tid = get_int64_value_from_field("prev_tid", payload_field, NULL);
-        custom_event_object->Payload._sched_switch.prev_prio = get_int64_value_from_field("prev_prio", payload_field, NULL);
-        custom_event_object->Payload._sched_switch.prev_state = get_int64_value_from_field("prev_state", payload_field, NULL);
-        strncpy(custom_event_object->Payload._sched_switch.next_comm, get_string_value_from_field("next_comm", payload_field, NULL), sizeof(custom_event_object->Payload._sched_switch.next_comm));
-        custom_event_object->Payload._sched_switch.next_tid = get_int64_value_from_field("next_tid", payload_field, NULL);
-        custom_event_object->Payload._sched_switch.next_prio = get_int64_value_from_field("next_prio", payload_field, NULL);
-    } else if (strcmp(custom_event_object->event_name, "syscall_entry_read") == 0) {
-        custom_event_object->Payload._syscall_entry_read.fd = get_uint64_value_from_field("fd", payload_field, NULL);
-        custom_event_object->Payload._syscall_entry_read.count = get_uint64_value_from_field("count", payload_field, NULL);
-    } else if (strcmp(custom_event_object->event_name, "syscall_exit_read") == 0) {
-        custom_event_object->Payload._syscall_exit_read.ret = get_int64_value_from_field("ret", payload_field, NULL);
-        custom_event_object->Payload._syscall_exit_read.buf = get_uint64_value_from_field("buf", payload_field, NULL);
-    } else if (strcmp(custom_event_object->event_name, "syscall_entry_write") == 0) {
-        custom_event_object->Payload._syscall_entry_write.fd = get_uint64_value_from_field("fd", payload_field, NULL);
-        custom_event_object->Payload._syscall_entry_write.buf = get_uint64_value_from_field("buf", payload_field, NULL);
-        custom_event_object->Payload._syscall_entry_write.count = get_uint64_value_from_field("count", payload_field, NULL);
-    } else if (strcmp(custom_event_object->event_name, "syscall_exit_write") == 0) {
-        custom_event_object->Payload._syscall_exit_write.ret = get_int64_value_from_field("ret", payload_field, NULL);
-    }
+    /* Get tid */
+    custom_event_object->tid = get_int64_value_from_field("tid", common_context_field, NULL);
 
     /* Send object */
-    send(object_out->sockfd, custom_event_object, sizeof(custom_event), 0);
+    send(object_out->sockfd, custom_event_object, event_size, 0);
 
     /* Print index */
     printf("#%" PRIu64, object_out->index);
