@@ -11,37 +11,6 @@
 #include <stdbool.h>
 #include <inttypes.h>
 
-typedef struct sched_switch{
-	char prev_comm[32];
-	int64_t prev_tid;
-	int64_t prev_prio;
-	int64_t prev_state;
-	char next_comm[32];
-	int64_t next_tid;
-	int64_t next_prio;
-} sched_switch;
-
-typedef struct syscall_entry_read{
-	uint64_t fd;
-	uint64_t count;
-} syscall_entry_read;
-
-typedef struct syscall_exit_read{
-	int64_t ret;
-	uint64_t buf;
-} syscall_exit_read;
-
-
-typedef struct syscall_entry_write{
-	uint64_t fd;
-	uint64_t buf;
-	uint64_t count;
-} syscall_entry_write;
-
-typedef struct syscall_exit_write{
-	int64_t ret;
-} syscall_exit_write;
-
 typedef struct custom_event{
     bool last_event;
     char timestamp[32];
@@ -49,14 +18,9 @@ typedef struct custom_event{
     char domain[32];
     char event_name[32];
     uint64_t cpu_id;
-    int64_t pid;
-    union {
-		sched_switch _sched_switch;
-		syscall_entry_read _syscall_entry_read;
-		syscall_exit_read _syscall_exit_read;
-		syscall_entry_write _syscall_entry_write;
-		syscall_exit_write _syscall_exit_write;
-    } Payload;
+    int64_t tid;
+    uint64_t payload_size;
+    int64_t payloads[];
 } custom_event;
 
 
@@ -73,7 +37,7 @@ int main(int argc, char *argv[])
 
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-    serv_addr.sin_port = htons(5022);
+    serv_addr.sin_port = htons(5026);
 
     bind(listenfd, (struct sockaddr*)&serv_addr, sizeof(serv_addr));
 
@@ -82,16 +46,29 @@ int main(int argc, char *argv[])
     connfd = accept(listenfd, (struct sockaddr*)NULL, NULL);
 
     // recv data
+    uint64_t event_size = 0;
     custom_event* custom_event_object;
-    custom_event_object = (custom_event*) malloc (sizeof(custom_event));
     int i = 0;
     while (++i) {
-        recv(connfd, custom_event_object, sizeof(custom_event), 0);
+        recv(connfd, &event_size, sizeof(uint64_t), 0);
+        custom_event_object = (custom_event*) malloc (event_size);
+        memset(custom_event_object, 0, event_size);
+        //printf("%" PRIu64 "\n", event_size);
+        recv(connfd, custom_event_object, event_size, 0);
         if (custom_event_object->last_event) break;
         if (strcmp(custom_event_object->event_name, "syscall_entry_write") == 0) {
-            printf("%d\t event_name = %s cpu_id = %" PRIu64 " pid = %" PRIu64, i, custom_event_object->event_name, custom_event_object->cpu_id, custom_event_object->pid);
-            // payload
-            printf(" fd = %" PRIu64 " buf = %" PRIu64 " count = %" PRIu64 "\n", custom_event_object->Payload._syscall_entry_write.fd, custom_event_object->Payload._syscall_entry_write.buf, custom_event_object->Payload._syscall_entry_write.count);
+            printf("%d\t event_name = %s cpu_id = %" PRIu64 " tid = %" PRIu64, i, custom_event_object->event_name, custom_event_object->cpu_id, custom_event_object->tid);
+            printf(" fd = %" PRIu64, *(uint64_t *)(custom_event_object + 1));
+            printf("\n");
+        } else if (strcmp(custom_event_object->event_name, "syscall_entry_openat") == 0) {
+            printf("%d\t event_name = %s cpu_id = %" PRIu64 " tid = %" PRIu64, i, custom_event_object->event_name, custom_event_object->cpu_id, custom_event_object->tid);
+            unsigned int string_offset = *(unsigned int *)((int64_t *)(custom_event_object + 1) + 1);
+            unsigned int string_length = *(unsigned int *)((int *)((int64_t *)(custom_event_object + 1) + 1) + 1);
+            char buf[256];
+            memset(buf, 0, sizeof(buf));
+            memcpy(buf, (char *)custom_event_object + string_offset, string_length);
+            printf(" %s ", buf);
+            printf("\n");
         }
     }
 

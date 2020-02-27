@@ -140,7 +140,7 @@ bt_component_class_initialize_method_status object_csobj_initialize(
         return 1;
     }
     server_addr.sin_family = AF_INET;
-    server_addr.sin_port = htons(5022);
+    server_addr.sin_port = htons(5026);
     if(inet_pton(AF_INET, "127.0.0.1", &server_addr.sin_addr)<=0)
     {
         printf("\n inet_pton error occured\n");
@@ -199,6 +199,69 @@ object_csobj_graph_is_configured(bt_self_component_sink *self_component_sink)
     return BT_COMPONENT_CLASS_SINK_GRAPH_IS_CONFIGURED_METHOD_STATUS_OK;
 }
 
+
+/* get the number of params and cumulative string size in payload field */
+int get_payload_num_and_string_size(const bt_field *payload_field, uint64_t *payload_num, uint64_t *payload_string_size) {
+    /* payload field must be a structure */
+    if (bt_field_get_class_type(payload_field) == BT_FIELD_CLASS_TYPE_STRUCTURE) {
+        const bt_field_class *payload_field_class = bt_field_borrow_class_const(payload_field);
+        *payload_num = bt_field_class_structure_get_member_count(payload_field_class);
+        *payload_string_size = 0;
+        for (int i = 0; i < *payload_num; ++i) {
+            const bt_field *member_field = bt_field_structure_borrow_member_field_by_index_const(payload_field, i);
+            if (bt_field_get_class_type(member_field) == BT_FIELD_CLASS_TYPE_STRING) {
+                const char *buf = bt_field_string_get_value(member_field);
+                *payload_string_size += strlen(buf);
+            }
+        }
+        return 0;
+    } else {
+        return -1;
+    }
+}
+
+/* fill the values of payload params in our event object*/
+void fill_payload_param_by_index(custom_event *custom_event_object, const bt_field *payload_field, int i, unsigned int *payload_string_offset) {
+    const bt_field *member_field = bt_field_structure_borrow_member_field_by_index_const(payload_field, i);
+    bt_field_class_type member_field_class_type = bt_field_get_class_type(member_field);
+    if (member_field_class_type == BT_FIELD_CLASS_TYPE_BOOL) {
+        int64_t bool_value = (int64_t)bt_field_bool_get_value(member_field);
+        memcpy((int64_t *)(custom_event_object + 1) + i, &bool_value, sizeof(int64_t));
+    } else if (member_field_class_type == BT_FIELD_CLASS_TYPE_BIT_ARRAY) {
+        uint64_t bit_array_value = bt_field_bit_array_get_value_as_integer(member_field);
+        memcpy((int64_t *)(custom_event_object + 1) + i, &bit_array_value, sizeof(int64_t));
+    } else if (bt_field_class_type_is(member_field_class_type, BT_FIELD_CLASS_TYPE_UNSIGNED_INTEGER)) {
+        uint64_t unsigned_integer_value = bt_field_integer_unsigned_get_value(member_field);
+        memcpy((int64_t *)(custom_event_object + 1) + i, &unsigned_integer_value, sizeof(int64_t));
+    } else if (bt_field_class_type_is(member_field_class_type, BT_FIELD_CLASS_TYPE_SIGNED_INTEGER)) {
+        int64_t signed_integer_value = bt_field_integer_signed_get_value(member_field);
+        memcpy((int64_t *)(custom_event_object + 1) + i, &signed_integer_value, sizeof(int64_t));
+    } else if (member_field_class_type == BT_FIELD_CLASS_TYPE_SINGLE_PRECISION_REAL) {
+        double real_value = bt_field_real_single_precision_get_value(member_field);
+        memcpy((int64_t *)(custom_event_object + 1) + i, &real_value, sizeof(int64_t));
+    } else if (member_field_class_type == BT_FIELD_CLASS_TYPE_DOUBLE_PRECISION_REAL) {
+        double real_value = bt_field_real_double_precision_get_value(member_field);
+        memcpy((int64_t *)(custom_event_object + 1) + i, &real_value, sizeof(int64_t));
+    } else if (member_field_class_type == BT_FIELD_CLASS_TYPE_STRING) {
+        const char *string_value = bt_field_string_get_value(member_field);
+        unsigned int string_offset = *payload_string_offset;
+        unsigned int string_length = strlen(string_value);
+        memcpy((int64_t *)(custom_event_object + 1) + i, &string_offset, sizeof(int));
+        memcpy((int *)((int64_t *)(custom_event_object + 1) + i) + 1, &string_length, sizeof(int));
+        memcpy((char *)custom_event_object + string_offset, string_value, string_length);
+        *payload_string_offset += string_length;
+    } else if (member_field_class_type == BT_FIELD_CLASS_TYPE_STRUCTURE) {
+        /* do nothing for now */
+    } else if (bt_field_class_type_is(member_field_class_type, BT_FIELD_CLASS_TYPE_ARRAY)) {
+        /* do nothing for now */
+    } else if (bt_field_class_type_is(member_field_class_type, BT_FIELD_CLASS_TYPE_OPTION)) {
+        /* do nothing for now */
+    } else if (bt_field_class_type_is(member_field_class_type, BT_FIELD_CLASS_TYPE_VARIANT)) {
+        /* do nothing for now */
+    } 
+}
+
+/* get a parameter's value with type of uint64 */
 static
 uint64_t get_uint64_value_from_field(const char *target_name, const bt_field *field, const char *name) {
     bt_field_class_type field_class_type = bt_field_get_class_type(field);
@@ -228,6 +291,7 @@ uint64_t get_uint64_value_from_field(const char *target_name, const bt_field *fi
     }
 }
 
+/* get a parameter's value with type of int64 */
 static
 int64_t get_int64_value_from_field(const char *target_name, const bt_field *field, const char *name) {
     bt_field_class_type field_class_type = bt_field_get_class_type(field);
@@ -257,6 +321,7 @@ int64_t get_int64_value_from_field(const char *target_name, const bt_field *fiel
     }
 }
 
+/* get a parameter's value with type of string */
 static
 const char *get_string_value_from_field(const char *target_name, const bt_field *field, const char *name) {
     bt_field_class_type field_class_type = bt_field_get_class_type(field);
@@ -325,12 +390,16 @@ void print_message(struct object_out *object_out, const bt_message *message)
     
     /* Create event object to send */
     uint64_t payload_num, payload_string_size;
-    get_payload_num_and_string_size(payload_field, &payload_num, &payload_string_size);
+    int status_code = get_payload_num_and_string_size(payload_field, &payload_num, &payload_string_size);
+    if (status_code == -1) {
+        printf("Error in \"get_payload_num_and_string_size()\"\n");
+        return;
+    }
     uint64_t event_size = sizeof(custom_event) + payload_num * sizeof(int64_t) + payload_string_size;
-    uint64_t payload_string_offset = sizeof(custom_event) + payload_num * sizeof(int64_t);
+    unsigned int payload_string_offset = sizeof(custom_event) + payload_num * sizeof(int64_t);
     custom_event *custom_event_object = (custom_event*) malloc (event_size);
-    for (uint64_t i = 0; i < payload_num; ++i) {
-        fill_payload_param_by_index(custom_event_object, payload_field, i, payload_string_offset);
+    for (int i = 0; i < payload_num; ++i) {
+        fill_payload_param_by_index(custom_event_object, payload_field, i, &payload_string_offset);
     }
     custom_event_object->last_event = false;
 
@@ -356,11 +425,16 @@ void print_message(struct object_out *object_out, const bt_message *message)
     /* Get tid */
     custom_event_object->tid = get_int64_value_from_field("tid", common_context_field, NULL);
 
+    /* Send object size */
+    send(object_out->sockfd, &event_size, sizeof(uint64_t), 0);
+
     /* Send object */
     send(object_out->sockfd, custom_event_object, event_size, 0);
 
     /* Print index */
     printf("#%" PRIu64, object_out->index);
+
+    printf(" fd = %" PRIu64, *(uint64_t *)(custom_event_object + 1));
 
     /* Print timestamp (ns from origin) */
     //printf(", \"timestamp\":\"%s\"", custom_event_object->timestamp);
@@ -372,7 +446,7 @@ void print_message(struct object_out *object_out, const bt_message *message)
     //printf(", \"domain\":\"%s\"", custom_event_object->domain);
 
     /* Print event name */
-    //printf(", \"event_name\":\"%s\"", custom_event_object->event_name);
+    printf(", \"event_name\":\"%s\"", custom_event_object->event_name);
 
     printf("\n");
  
