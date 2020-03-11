@@ -8,7 +8,7 @@
 
  
 /* Sink component's private data */
-struct toby_out {
+struct json_out {
     /* Upstream message iterator (owned by this) */
     bt_message_iterator *message_iterator;
  
@@ -85,21 +85,21 @@ void format_int(char *buf, int64_t value, unsigned int base)
  * Initializes the sink component.
  */
 static
-bt_component_class_initialize_method_status toby_out_initialize(
+bt_component_class_initialize_method_status json_out_initialize(
         bt_self_component_sink *self_component_sink,
         bt_self_component_sink_configuration *configuration,
         const bt_value *params, void *initialize_method_data)
 {
     /* Allocate a private data structure */
-    struct toby_out *toby_out = malloc(sizeof(*toby_out));
+    struct json_out *json_out = malloc(sizeof(*json_out));
  
     /* Initialize the first event message's index */
-    toby_out->index = 1;
+    json_out->index = 1;
  
     /* Set the component's user data to our private data structure */
     bt_self_component_set_data(
         bt_self_component_sink_as_self_component(self_component_sink),
-        toby_out);
+        json_out);
  
     /*
      * Add an input port named `in` to the sink component.
@@ -119,14 +119,14 @@ bt_component_class_initialize_method_status toby_out_initialize(
  * Finalizes the sink component.
  */
 static
-void toby_out_finalize(bt_self_component_sink *self_component_sink)
+void json_out_finalize(bt_self_component_sink *self_component_sink)
 {
     /* Retrieve our private data from the component's user data */
-    struct toby_out *toby_out = bt_self_component_get_data(
+    struct json_out *json_out = bt_self_component_get_data(
         bt_self_component_sink_as_self_component(self_component_sink));
  
     /* Free the allocated structure */
-    free(toby_out);
+    free(json_out);
 }
  
 /*
@@ -137,10 +137,10 @@ void toby_out_finalize(bt_self_component_sink *self_component_sink)
  */
 static
 bt_component_class_sink_graph_is_configured_method_status
-toby_out_graph_is_configured(bt_self_component_sink *self_component_sink)
+json_out_graph_is_configured(bt_self_component_sink *self_component_sink)
 {
     /* Retrieve our private data from the component's user data */
-    struct toby_out *toby_out = bt_self_component_get_data(
+    struct json_out *json_out = bt_self_component_get_data(
         bt_self_component_sink_as_self_component(self_component_sink));
  
     /* Borrow our unique port */
@@ -150,7 +150,7 @@ toby_out_graph_is_configured(bt_self_component_sink *self_component_sink)
  
     /* Create the uptream message iterator */
     bt_message_iterator_create_from_sink_component(self_component_sink,
-        in_port, &toby_out->message_iterator);
+        in_port, &json_out->message_iterator);
  
     return BT_COMPONENT_CLASS_SINK_GRAPH_IS_CONFIGURED_METHOD_STATUS_OK;
 }
@@ -179,7 +179,7 @@ void print_field(const bt_field *field, const char *name) {
     }
     /* Write field's value */
     if (field_class_type == BT_FIELD_CLASS_TYPE_BOOL) {
-        printf("<BOOL>");
+        //printf("<BOOL>");
         bt_bool prop_value = bt_field_bool_get_value(field);
         if (prop_value) {
             printf("true");
@@ -187,7 +187,7 @@ void print_field(const bt_field *field, const char *name) {
             printf("false");
         }
     } else if (field_class_type == BT_FIELD_CLASS_TYPE_BIT_ARRAY) {
-        printf("<BIT_ARRAY>");
+        //printf("<BIT_ARRAY>");
         format_uint(buf, bt_field_bit_array_get_value_as_integer(field), 16);
         printf("%s", buf);
     } else if (bt_field_class_type_is(field_class_type, BT_FIELD_CLASS_TYPE_INTEGER)) {
@@ -211,25 +211,25 @@ void print_field(const bt_field *field, const char *name) {
             return;
         }
         if (bt_field_class_type_is(field_class_type, BT_FIELD_CLASS_TYPE_UNSIGNED_INTEGER)) {
-            printf("<UNSIGNED_INTEGER>");
+            //printf("<UNSIGNED_INTEGER>");
             format_uint(buf, bt_field_integer_unsigned_get_value(field), fmt_base);
             printf("%s", buf);
         } else {
-            printf("<SIGNED_INTEGER>");
+            //printf("<SIGNED_INTEGER>");
             format_uint(buf, bt_field_integer_signed_get_value(field), fmt_base);
             printf("%s", buf);
         }
     } else if (field_class_type == BT_FIELD_CLASS_TYPE_SINGLE_PRECISION_REAL) {
-        printf("<SINGLE_PRECISION_REAL>");
+        //printf("<SINGLE_PRECISION_REAL>");
         printf("%f", (double) bt_field_real_single_precision_get_value(field));
     } else if (field_class_type == BT_FIELD_CLASS_TYPE_DOUBLE_PRECISION_REAL) {
-        printf("<DOUBLE_PRECISION_REAL>");
+        //printf("<DOUBLE_PRECISION_REAL>");
         printf("%f", (double) bt_field_real_double_precision_get_value(field));
     } else if (field_class_type == BT_FIELD_CLASS_TYPE_STRING) {
-        printf("<STRING>");
+        //printf("<STRING>");
         printf("\"%s\"", bt_field_string_get_value(field));
     } else if (field_class_type == BT_FIELD_CLASS_TYPE_STRUCTURE) {
-        printf("<STRUCTURE>");
+        //printf("<STRUCTURE>");
         field_class = bt_field_borrow_class_const(field);
         uint64_t member_count = bt_field_class_structure_get_member_count(field_class);
         /* Print JSON object left brace */
@@ -247,7 +247,7 @@ void print_field(const bt_field *field, const char *name) {
         /* Print JSON object right brace */
         printf(" }");
     } else if (bt_field_class_type_is(field_class_type, BT_FIELD_CLASS_TYPE_ARRAY)) {
-        printf("<ARRAY>");
+        //printf("<ARRAY>");
         uint64_t element_count = bt_field_array_get_length(field);
         /* Print JSON array left bracket */
         printf("[ ");
@@ -262,14 +262,14 @@ void print_field(const bt_field *field, const char *name) {
         /* Print JSON array right bracket */
         printf(" ]");
     } else if (bt_field_class_type_is(field_class_type, BT_FIELD_CLASS_TYPE_OPTION)) {
-        printf("<OPTION>");
+        //printf("<OPTION>");
         const bt_field *option_field =
             bt_field_option_borrow_field_const(field);
         if (option_field) {
             print_field(option_field, NULL);
         }
     } else if (bt_field_class_type_is(field_class_type, BT_FIELD_CLASS_TYPE_VARIANT)) {
-        printf("<VARIANT>");
+        //printf("<VARIANT>");
         const bt_field *variant_field =
             bt_field_variant_borrow_selected_option_field_const(field);
         print_field(variant_field, NULL);
@@ -282,7 +282,7 @@ void print_field(const bt_field *field, const char *name) {
  * standard output.
  */
 static
-void print_message(struct toby_out *toby_out, const bt_message *message)
+void print_message(struct json_out *json_out, const bt_message *message)
 {
     /* Discard if it's not an event message */
     if (bt_message_get_type(message) != BT_MESSAGE_TYPE_EVENT) {
@@ -317,7 +317,7 @@ void print_message(struct toby_out *toby_out, const bt_message *message)
     /* Get the payload field members */
     const bt_field *payload_field = bt_event_borrow_payload_field_const(event);
     
-    //printf("#%" PRIu64 ": ", toby_out->index);
+    //printf("#%" PRIu64 ": ", json_out->index);
     printf("{ ");
 
     /* Print timestamp (ns from origin) */
@@ -358,7 +358,7 @@ void print_message(struct toby_out *toby_out, const bt_message *message)
     printf(" }\n");
  
     /* Increment the current event message's index */
-    toby_out->index++;
+    json_out->index++;
  
 end:
     return;
@@ -368,27 +368,27 @@ end:
  * Consumes a batch of messages and writes the corresponding lines to
  * the standard output.
  */
-bt_component_class_sink_consume_method_status toby_out_consume(
+bt_component_class_sink_consume_method_status json_out_consume(
         bt_self_component_sink *self_component_sink)
 {
     bt_component_class_sink_consume_method_status status =
         BT_COMPONENT_CLASS_SINK_CONSUME_METHOD_STATUS_OK;
  
     /* Retrieve our private data from the component's user data */
-    struct toby_out *toby_out = bt_self_component_get_data(
+    struct json_out *json_out = bt_self_component_get_data(
         bt_self_component_sink_as_self_component(self_component_sink));
  
     /* Consume a batch of messages from the upstream message iterator */
     bt_message_array_const messages;
     uint64_t message_count;
     bt_message_iterator_next_status next_status =
-        bt_message_iterator_next(toby_out->message_iterator, &messages,
+        bt_message_iterator_next(json_out->message_iterator, &messages,
             &message_count);
  
     switch (next_status) {
     case BT_MESSAGE_ITERATOR_NEXT_STATUS_END:
         /* End of iteration: put the message iterator's reference */
-        bt_message_iterator_put_ref(toby_out->message_iterator);
+        bt_message_iterator_put_ref(json_out->message_iterator);
         status = BT_COMPONENT_CLASS_SINK_CONSUME_METHOD_STATUS_END;
         goto end;
     case BT_MESSAGE_ITERATOR_NEXT_STATUS_AGAIN:
@@ -410,7 +410,7 @@ bt_component_class_sink_consume_method_status toby_out_consume(
         const bt_message *message = messages[i];
  
         /* Print line for current message if it's an event message */
-        print_message(toby_out, message);
+        print_message(json_out, message);
  
         /* Put this message's reference */
         bt_message_put_ref(message);
@@ -423,15 +423,15 @@ end:
 /* Mandatory */
 BT_PLUGIN_MODULE();
  
-/* Define the `toby` plugin */
-BT_PLUGIN(toby);
+/* Define the `json` plugin */
+BT_PLUGIN(json);
  
-/* Define the `output` sink component class */
-BT_PLUGIN_SINK_COMPONENT_CLASS(output, toby_out_consume);
+/* Define the `line` sink component class */
+BT_PLUGIN_SINK_COMPONENT_CLASS(line, json_out_consume);
  
-/* Set some of the `output` sink component class's optional methods */
-BT_PLUGIN_SINK_COMPONENT_CLASS_INITIALIZE_METHOD(output,
-    toby_out_initialize);
-BT_PLUGIN_SINK_COMPONENT_CLASS_FINALIZE_METHOD(output, toby_out_finalize);
-BT_PLUGIN_SINK_COMPONENT_CLASS_GRAPH_IS_CONFIGURED_METHOD(output,
-    toby_out_graph_is_configured);
+/* Set some of the `line` sink component class's optional methods */
+BT_PLUGIN_SINK_COMPONENT_CLASS_INITIALIZE_METHOD(line,
+    json_out_initialize);
+BT_PLUGIN_SINK_COMPONENT_CLASS_FINALIZE_METHOD(line, json_out_finalize);
+BT_PLUGIN_SINK_COMPONENT_CLASS_GRAPH_IS_CONFIGURED_METHOD(line,
+    json_out_graph_is_configured);
