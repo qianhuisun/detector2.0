@@ -33,8 +33,7 @@ typedef struct custom_event
     char event_name[32];
     uint64_t cpu_id;
     int64_t tid;
-    uint64_t payload_size;
-    /* point to payload params */
+    uint64_t payload_num;
     int64_t payloads[];
 } custom_event;
 
@@ -427,10 +426,6 @@ static void print_message(struct object_out *object_out, const bt_message *messa
     uint64_t event_size = sizeof(custom_event) + payload_num * sizeof(int64_t) + payload_string_size;
     unsigned int payload_string_offset = sizeof(custom_event) + payload_num * sizeof(int64_t);
     custom_event *custom_event_object = (custom_event *)malloc(event_size);
-    for (int i = 0; i < payload_num; ++i)
-    {
-        fill_payload_param_by_index(custom_event_object, payload_field, i, &payload_string_offset);
-    }
 
     /* Get timestamp */
     bt_clock_snapshot_get_ns_from_origin(clock_snapshot, &custom_event_object->timestamp);
@@ -450,12 +445,23 @@ static void print_message(struct object_out *object_out, const bt_message *messa
     /* Get tid */
     custom_event_object->tid = get_int64_value_from_field("tid", common_context_field, NULL);
 
+    /* Get payload parameter number */
+    custom_event_object->payload_num = payload_num;
+
+    /* Get payload parameters */
+    for (int i = 0; i < payload_num; ++i)
+    {
+        fill_payload_param_by_index(custom_event_object, payload_field, i, &payload_string_offset);
+    }
+
+    /* Update sink component's private data */
     object_out->custom_event_object_size[object_out->custom_event_object_index] = event_size;
     memcpy(object_out->head, custom_event_object, event_size);
     object_out->head += event_size;
     object_out->custom_event_objects_size += event_size;
     object_out->custom_event_object_index++;
 
+    /* Send packet if EVENT_OBJECT_NUMBER event objects are ready */
     if (object_out->custom_event_object_index == EVENT_OBJECT_NUMBER)
     {
 
