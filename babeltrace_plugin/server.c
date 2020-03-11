@@ -21,7 +21,7 @@ typedef struct custom_event{
     char event_name[32];
     uint64_t cpu_id;
     int64_t tid;
-    uint64_t custom_event_objects_size;
+    uint64_t payload_num;
     int64_t payloads[];
 } custom_event;
 
@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
 
             if (strcmp(custom_event_object->event_name, "syscall_entry_write") == 0) {
             /* if it's a syscall write event, print the first param in payload, which is fd in uint64_t */
-                printf("%d\t event_name = %s cpu_id = %" PRIu64 " tid = %" PRIu64, i, custom_event_object->event_name, custom_event_object->cpu_id, custom_event_object->tid);
+                printf("%d\t event_name = %s cpu_id = %" PRIu64 " tid = %" PRIu64 " payload_num = %" PRIu64, i, custom_event_object->event_name, custom_event_object->cpu_id, custom_event_object->tid, custom_event_object->payload_num);
                 printf(" fd = %" PRIu64, *(uint64_t *)(custom_event_object + 1));
                 printf("\n");
             } else if (strcmp(custom_event_object->event_name, "syscall_entry_openat") == 0) {
@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
                 char buf[256];
                 memset(buf, 0, sizeof(buf));
                 memcpy(buf, (char *)custom_event_object + string_offset, string_length);
-                printf("%d\t event_name = %s cpu_id = %" PRIu64 " tid = %" PRIu64, i, custom_event_object->event_name, custom_event_object->cpu_id, custom_event_object->tid);
+                printf("%d\t event_name = %s cpu_id = %" PRIu64 " tid = %" PRIu64 " payload_num = %" PRIu64, i, custom_event_object->event_name, custom_event_object->cpu_id, custom_event_object->tid, custom_event_object->payload_num);
                 printf(" filename = %s ", buf);
                 printf("\n");
             }
@@ -105,4 +105,3 @@ int main(int argc, char *argv[])
 
     return 0;
 }
-
