@@ -9,3 +9,7 @@ babeltrace2 --plugin-path=. lttng_output/network/ --component=sink.toby.output
 cc line.c -fPIC -c $(pkg-config --cflags babeltrace2)
 ld line.o -o line.so -shared $(pkg-config --libs babeltrace2)
 babeltrace2 --plugin-path=. lttng_output/network/ --component=sink.json.line
+
+cc epitome.c -fPIC -c $(pkg-config --cflags babeltrace2)
+ld epitome.o -o epitome.so -shared $(pkg-config --libs babeltrace2)
+babeltrace2 --plugin-path=. lttng_output/network/ --component=sink.epitome.output

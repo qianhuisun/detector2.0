@@ -22,8 +22,9 @@ typedef struct custom_event{
     uint64_t cpu_id;
     int64_t tid;
     uint64_t payload_num;
-    /* payload_string_flag's corresponding bit will be set 1 if a payload parameter is string type
-     * 64 bits are sufficient for the payload usually consists of only a few parameters (maxium parameter number is 14)
+    /* payload_string_flag's corresponding bit will be set 1 if a payload parameter is string type.
+     * the left most bit represents the first (id = 0) payload parameter. 
+     * 64 bits are sufficient for the payload usually consists of only a few parameters (maxium parameter number is 14).
      */
     int64_t payload_string_flag;
     int64_t payloads[];
