@@ -34,6 +34,10 @@ typedef struct custom_event
     uint64_t cpu_id;
     int64_t tid;
     uint64_t payload_num;
+    /* payload_string_flag's corresponding bit will be set 1 if a payload parameter is string type
+     * 64 bits are sufficient for the payload usually consists of only a few parameters (maxium parameter number is 14)
+     */
+    int64_t payload_string_flag;
     int64_t payloads[];
 } custom_event;
 
@@ -175,7 +179,7 @@ object_csobj_graph_is_configured(bt_self_component_sink *self_component_sink)
 }
 
 /* get the number of params and cumulative string size in payload field */
-int get_payload_num_and_string_size(const bt_field *payload_field, uint64_t *payload_num, uint64_t *payload_string_size)
+int get_payload_num_and_string_size(const bt_field *payload_field, uint64_t *payload_num, int64_t *payload_string_flag, uint64_t *payload_string_size)
 {
     /* payload field must be a structure */
     if (bt_field_get_class_type(payload_field) == BT_FIELD_CLASS_TYPE_STRUCTURE)
@@ -188,8 +192,12 @@ int get_payload_num_and_string_size(const bt_field *payload_field, uint64_t *pay
             const bt_field *member_field = bt_field_structure_borrow_member_field_by_index_const(payload_field, i);
             if (bt_field_get_class_type(member_field) == BT_FIELD_CLASS_TYPE_STRING)
             {
+                /* update payload_string_size for future malloc() use */
                 const char *buf = bt_field_string_get_value(member_field);
                 *payload_string_size += strlen(buf);
+                /* update payload_string_flag by set the i th bit to 1 */
+                int64_t flag = 1;
+                *payload_string_flag |= flag << (63 - i);
             }
         }
         return 0;
@@ -417,7 +425,8 @@ static void print_message(struct object_out *object_out, const bt_message *messa
 
     /* Create event object to send */
     uint64_t payload_num, payload_string_size;
-    int status_code = get_payload_num_and_string_size(payload_field, &payload_num, &payload_string_size);
+    int64_t payload_string_flag = 0;
+    int status_code = get_payload_num_and_string_size(payload_field, &payload_num, &payload_string_flag, &payload_string_size);
     if (status_code == -1)
     {
         printf("Error in \"get_payload_num_and_string_size()\"\n");
@@ -445,8 +454,11 @@ static void print_message(struct object_out *object_out, const bt_message *messa
     /* Get tid */
     custom_event_object->tid = get_int64_value_from_field("tid", common_context_field, NULL);
 
-    /* Get payload parameter number */
+    /* Set payload parameter number */
     custom_event_object->payload_num = payload_num;
+
+    /* Set payload parameter string flag */
+    custom_event_object->payload_string_flag = payload_string_flag;
 
     /* Get payload parameters */
     for (int i = 0; i < payload_num; ++i)
